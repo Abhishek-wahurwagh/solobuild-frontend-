@@ -5,7 +5,13 @@ export const metadata = {
   title: "Sign Up — SoloBuildAI",
 };
 
-export default function SignupPage() {
+export default async function SignupPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ email?: string }>;
+}) {
+  const { email = "" } = await searchParams;
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Top bar */}
@@ -25,7 +31,7 @@ export default function SignupPage() {
       {/* Centered card */}
       <main className="flex-1 flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-sm bg-white rounded-2xl border border-slate-200 shadow-sm px-8 py-10">
-          <SignupFlow />
+          <SignupFlow initialEmail={email} />
         </div>
       </main>
 

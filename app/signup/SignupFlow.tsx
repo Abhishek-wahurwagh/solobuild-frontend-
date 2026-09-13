@@ -356,9 +356,10 @@ function SuccessStep({ email }: { email: string }) {
 }
 
 /* ─── Root ───────────────────────────────────────────────────────────── */
-export default function SignupFlow() {
-  const [step, setStep] = useState<Step>("email");
-  const [email, setEmail] = useState("");
+export default function SignupFlow({ initialEmail = "" }: { initialEmail?: string }) {
+  // If email arrives pre-filled (e.g. from homepage sign-in box), skip straight to details
+  const [step, setStep] = useState<Step>(initialEmail ? "details" : "email");
+  const [email, setEmail] = useState(initialEmail);
 
   if (step === "success") return <SuccessStep email={email} />;
   if (step === "details")
