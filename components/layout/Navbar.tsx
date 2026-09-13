@@ -57,8 +57,6 @@ const NAV_ITEMS = [
   },
 ];
 
-const SIGN_IN_URL = "https://main.d3ataamm8hxei7.amplifyapp.com/";
-
 /* ─── Dropdown ─────────────────────────────────────────────────────────── */
 
 function Dropdown({ items }: { items: typeof NAV_ITEMS[0]["items"] }) {
@@ -204,9 +202,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         </div>
         <div className="border-t border-slate-100 p-4 flex flex-col gap-2.5">
           <a
-            href={SIGN_IN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/signin"
             className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
           >
             Sign in
@@ -314,14 +310,12 @@ export default function Navbar() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
               </button>
-              <a
-                href={SIGN_IN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/signin"
                 className="px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
               >
                 Sign in
-              </a>
+              </Link>
               <Link
                 href="/signup"
                 className="px-3.5 py-2 text-sm font-medium text-slate-700 border border-slate-200 bg-white hover:bg-slate-50 rounded-lg transition-colors"
