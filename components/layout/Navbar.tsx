@@ -226,25 +226,31 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
       <Logo />
 
       <div className="hidden lg:flex items-center">
+        <Link
+          href="/"
+          className={`relative text-[13px] font-medium px-3 py-2 transition-colors ${
+            isHome ? "text-white" : "text-slate-400 hover:text-white"
+          }`}
+        >
+          Home
+          {isHome && (
+            <span className="absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-[#0066FF]" />
+          )}
+        </Link>
         {[
-          { label: "Home", href: "/" },
-          { label: "Solutions", href: "/solutions/hiring" },
-          { label: "Use Cases", href: "/solutions/hiring" },
-          { label: "Pricing", href: "/demo" },
-          { label: "About", href: "/company/about" },
+          { label: "Solutions", items: NAV_ITEMS[1].items },
+          { label: "Use Cases", items: NAV_ITEMS[0].items },
+          { label: "Pricing", items: NAV_ITEMS[2].items },
+          { label: "About", items: NAV_ITEMS[4].items },
         ].map((item) => (
-          <Link
+          <NavItem
             key={item.label}
-            href={item.href}
-            className={`relative text-[13px] font-medium px-3 py-2 transition-colors ${
-              item.label === "Home" && isHome ? "text-white" : "text-slate-400 hover:text-white"
-            }`}
-          >
-            {item.label}
-            {item.label === "Home" && isHome && (
-              <span className="absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-[#0066FF]" />
-            )}
-          </Link>
+            label={item.label}
+            items={item.items}
+            active={activeDropdown === item.label}
+            onOpen={() => handleOpen(item.label)}
+            onClose={handleClose}
+          />
         ))}
       </div>
 
