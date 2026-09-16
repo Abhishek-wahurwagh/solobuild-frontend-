@@ -38,7 +38,7 @@ const FOOTER_LINKS = {
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-50 border-t border-slate-200">
+    <footer style={{ backgroundColor: "#060b16", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Top row */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-14">
@@ -50,11 +50,11 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
                 </svg>
               </div>
-              <span className="font-semibold text-slate-900 text-[15px] tracking-tight">
-                SoloBuild<span className="text-blue-600">AI</span>
+              <span className="font-semibold text-[15px] tracking-tight" style={{ color: "#f0f4ff" }}>
+                SoloBuild<span style={{ color: "#3b7eff" }}>AI</span>
               </span>
             </Link>
-            <p className="text-sm text-slate-500 leading-relaxed">
+            <p className="text-sm leading-relaxed" style={{ color: "#3b5a7a" }}>
               Practical AI for real work.
             </p>
           </div>
@@ -62,7 +62,7 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([section, links]) => (
             <div key={section}>
-              <h3 className="text-xs font-semibold text-slate-900 uppercase tracking-widest mb-4">
+              <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#94a3c4" }}>
                 {section}
               </h3>
               <ul className="space-y-2.5">
@@ -70,7 +70,8 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-slate-500 hover:text-slate-900 transition-colors"
+                      className="text-sm transition-colors"
+                      style={{ color: "#3b5a7a" }}
                     >
                       {link.label}
                     </Link>
@@ -82,20 +83,20 @@ export default function Footer() {
         </div>
 
         {/* Bottom row */}
-        <div className="border-t border-slate-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-400">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <p className="text-xs" style={{ color: "#3b5a7a" }}>
             © {new Date().getFullYear()} SoloBuildAI. All rights reserved.
           </p>
           <div className="flex items-center gap-5">
-            <Link href="/legal/privacy" className="text-xs text-slate-400 hover:text-slate-700 transition-colors">
-              Privacy
-            </Link>
-            <Link href="/legal/terms" className="text-xs text-slate-400 hover:text-slate-700 transition-colors">
-              Terms
-            </Link>
-            <Link href="/legal/cookies" className="text-xs text-slate-400 hover:text-slate-700 transition-colors">
-              Cookies
-            </Link>
+            {[
+              { label: "Privacy", href: "/legal/privacy" },
+              { label: "Terms", href: "/legal/terms" },
+              { label: "Cookies", href: "/legal/cookies" },
+            ].map(({ label, href }) => (
+              <Link key={href} href={href} className="text-xs transition-colors" style={{ color: "#3b5a7a" }}>
+                {label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

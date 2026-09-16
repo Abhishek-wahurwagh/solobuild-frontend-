@@ -16,48 +16,56 @@ export default function HomePage() {
   return (
     <PageLayout>
 
-      {/* ── 01 HERO ───────────────────────────────────────────────────── */}
+      {/* ── 01 HERO ──────────────────────────────────────────────────────
+          Dark navy bg. Dot grid overlay. Auth card on right.           */}
       <section
         id="site-hero"
-        className="relative bg-white min-h-[calc(100vh-80px)] flex items-center py-16 overflow-hidden"
+        className="relative min-h-[calc(100vh-80px)] flex items-center py-16 overflow-hidden"
+        style={{ backgroundColor: "#080d1a" }}
       >
-        {/* Dot-grid overlay */}
-        <div className="absolute inset-0 grid-bg opacity-70 pointer-events-none" />
+        <div className="absolute inset-0 grid-bg pointer-events-none" />
+        {/* Subtle radial glow behind hero text */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            top: "10%", left: "0", width: "60%", height: "70%",
+            background: "radial-gradient(ellipse at 30% 40%, rgba(37,99,235,0.12) 0%, transparent 65%)",
+          }}
+        />
 
-        {/* Parallax JS hook — no DOM output */}
         <HeroParallax />
 
         <div className="relative max-w-7xl mx-auto px-6 w-full">
-          {/* hero-parallax wrapper — subtle upward shift + fade on scroll */}
           <div className="hero-parallax">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8 xl:gap-10 items-center">
 
-              {/* Left — headline + CTAs */}
+              {/* Left */}
               <ScrollReveal variant="reveal">
                 <div className="flex flex-col gap-7 max-w-2xl">
                   <div>
-                    <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-blue-600 mb-5 block">
-                      <span className="w-6 h-px bg-blue-300 inline-block" />
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-blue-400 mb-5 block">
+                      <span className="w-6 h-px bg-blue-700 inline-block" />
                       Practical AI for Real Work
                     </span>
-                    <h1 className="text-5xl md:text-6xl font-semibold text-slate-900 leading-[1.07] tracking-tight mb-5">
+                    <h1 className="text-5xl md:text-6xl font-semibold leading-[1.07] tracking-tight mb-5" style={{ color: "#f0f4ff" }}>
                       AI that works{" "}
-                      <span className="text-blue-600">with your people.</span>
+                      <span style={{ color: "#3b7eff" }}>with your people.</span>
                     </h1>
-                    <p className="text-lg text-slate-500 leading-relaxed">
+                    <p className="text-lg leading-relaxed" style={{ color: "#94a3c4" }}>
                       We build practical AI systems that understand workflows, guide decisions,
                       perform tasks, and bring people into the loop when human judgment matters.
                     </p>
                   </div>
 
-                  {/* Capability signal pills */}
+                  {/* Capability pills */}
                   <div className="flex flex-wrap gap-2">
                     {["Understand", "Guide", "Act", "Interact", "Escalate"].map((c) => (
                       <span
                         key={c}
-                        className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium rounded-full px-3 py-1.5"
+                        style={{ color: "#94a3c4", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)" }}
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: "#3b7eff" }} />
                         {c}
                       </span>
                     ))}
@@ -66,13 +74,15 @@ export default function HomePage() {
                   <div className="flex flex-wrap gap-3">
                     <Link
                       href="/demo"
-                      className="px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 transition-colors shadow-sm"
+                      className="btn-glow px-6 py-3 text-white text-sm font-medium rounded-xl transition-colors shadow-sm"
+                      style={{ backgroundColor: "#2563eb" }}
                     >
                       Request a demo
                     </Link>
                     <Link
                       href="/solutions/hiring"
-                      className="px-6 py-3 border border-slate-200 text-slate-700 text-sm font-medium rounded-xl hover:bg-slate-50 transition-colors"
+                      className="px-6 py-3 text-sm font-medium rounded-xl transition-colors"
+                      style={{ color: "#94a3c4", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)" }}
                     >
                       Explore AI for Hiring
                     </Link>
@@ -80,7 +90,7 @@ export default function HomePage() {
                 </div>
               </ScrollReveal>
 
-              {/* Right — Auth card (unchanged size per brief) */}
+              {/* Right — Auth card stays white (untouched) */}
               <ScrollReveal variant="reveal" delay={100}>
                 <div className="flex lg:justify-end">
                   <HeroSignin />
@@ -92,70 +102,69 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 02 PRODUCT SHOWCASE / CAROUSEL ───────────────────────────── */}
-      {/* pale blue bg — visual chapter break from hero */}
-      <div className="bg-[#f8fafc] border-y border-slate-200">
+      {/* Glowing separator */}
+      <div className="section-sep" />
+
+      {/* ── 02 PRODUCT SHOWCASE / CAROUSEL ─────────────────────────────── */}
+      <div style={{ backgroundColor: "#0d1426", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <ScrollReveal variant="reveal-scale" threshold={0.06}>
           <ProductCarousel />
         </ScrollReveal>
       </div>
 
-      {/* ── 03 WHAT SOLOBUILD AI DOES — Capability blocks ─────────────── */}
-      {/* Uses its own scroll reveal internally; section bg: white */}
+      {/* ── 03 CAPABILITY BLOCKS ────────────────────────────────────────── */}
       <CapabilityBlocks />
 
-      {/* ── 04 HOW THE SYSTEM WORKS — Architecture layers ─────────────── */}
-      {/* bg: #eff6ff — light blue chapter */}
+      {/* ── 04 SYSTEM ARCHITECTURE ──────────────────────────────────────── */}
       <SystemArchitecture />
 
-      {/* ── 05 AI FOR HIRING — Product showcase callout ───────────────── */}
-      {/* bg: white */}
+      {/* ── 05 AI FOR HIRING ────────────────────────────────────────────── */}
       <HiringShowcase />
 
-      {/* ── 06 BUILD PHILOSOPHY — Discover / Build / Productize ────────── */}
-      {/* bg: white */}
+      {/* ── 06 BUILD PHILOSOPHY ─────────────────────────────────────────── */}
       <BuildPhilosophy />
 
-      {/* ── 08 SOLUTIONS — Blue contrast treatment ────────────────────── */}
-      {/* bg: #f8fafc */}
+      {/* ── 07 SOLUTIONS ────────────────────────────────────────────────── */}
       <EnterpriseSolutions />
 
-      {/* ── 09 CUSTOM AI CTA — Deep navy ─────────────────────────────── */}
+      {/* ── 08 CUSTOM AI ────────────────────────────────────────────────── */}
       <CustomAICta />
 
-      {/* ── 10 ENTERPRISE FOUNDATION ─────────────────────────────────── */}
-      {/* bg: white */}
+      {/* ── 09 ENTERPRISE FOUNDATION ────────────────────────────────────── */}
       <EnterpriseFoundation />
 
-      {/* ── 11 FINAL CTA ─────────────────────────────────────────────── */}
-      <section className="py-28 bg-slate-900">
+      {/* ── 10 FINAL CTA ────────────────────────────────────────────────── */}
+      <section style={{ backgroundColor: "#0a0f1e", borderTop: "1px solid rgba(255,255,255,0.06)" }} className="py-28">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <ScrollReveal variant="reveal" threshold={0.15}>
-            <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 block mb-5">
+            <span className="text-xs font-semibold tracking-widest uppercase block mb-5" style={{ color: "#3b7eff" }}>
               Get Started
             </span>
-            <h2 className="text-4xl md:text-5xl font-semibold text-white leading-tight tracking-tight mb-5">
+            <h2 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-5" style={{ color: "#f0f4ff" }}>
               Let&apos;s build what works<br /> for your business.
             </h2>
-            <p className="text-slate-400 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+            <p className="text-lg leading-relaxed mb-10 max-w-xl mx-auto" style={{ color: "#94a3c4" }}>
               Start with AI for Hiring today — or tell us the operational problem you want to solve.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/demo"
-                className="px-7 py-3.5 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-500 transition-colors shadow-sm"
+                className="btn-glow px-7 py-3.5 text-white text-sm font-medium rounded-xl transition-colors shadow-sm"
+                style={{ backgroundColor: "#2563eb" }}
               >
                 Request a demo
               </Link>
               <Link
                 href="/solutions/hiring"
-                className="px-7 py-3.5 border border-slate-700 text-slate-300 text-sm font-medium rounded-xl hover:bg-slate-800 hover:text-white transition-colors"
+                className="px-7 py-3.5 text-sm font-medium rounded-xl transition-colors"
+                style={{ color: "#94a3c4", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)" }}
               >
                 Explore AI for Hiring
               </Link>
               <Link
                 href="/signup"
-                className="px-7 py-3.5 text-slate-400 text-sm font-medium rounded-xl hover:text-white transition-colors"
+                className="px-7 py-3.5 text-sm font-medium rounded-xl transition-colors"
+                style={{ color: "#4e607a" }}
               >
                 Sign up
               </Link>

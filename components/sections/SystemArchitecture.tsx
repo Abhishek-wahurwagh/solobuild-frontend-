@@ -123,18 +123,17 @@ export default function SystemArchitecture() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-[#eff6ff]">
-      <div className="max-w-7xl mx-auto px-6">
+    <section ref={sectionRef} className="py-24" style={{ backgroundColor: "#0d1426" }}>      <div className="max-w-7xl mx-auto px-6">
 
         {/* Header */}
         <div data-reveal className="mb-14 max-w-2xl">
-          <span className="text-xs font-semibold tracking-widest uppercase text-blue-600 block mb-4">
+          <span className="text-xs font-semibold tracking-widest uppercase block mb-4" style={{ color: "#3b7eff" }}>
             How the System Works
           </span>
-          <h2 className="text-4xl md:text-5xl font-semibold text-slate-900 leading-tight tracking-tight mb-4">
+          <h2 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-4" style={{ color: "#f0f4ff" }}>
             AI that can understand,<br className="hidden md:block" /> guide and act.
           </h2>
-          <p className="text-lg text-slate-500 leading-relaxed">
+          <p className="text-lg leading-relaxed" style={{ color: "#94a3c4" }}>
             Every SoloBuildAI system follows the same architecture — understand the situation,
             reason about it, act on it, and bring a human in when it matters.
           </p>

@@ -84,17 +84,17 @@ export default function EnterpriseFoundation() {
     return () => obs.disconnect();
   }, []);
   return (
-    <section ref={sectionRef} className="py-24 bg-white">
+    <section ref={sectionRef} className="py-24" style={{ backgroundColor: "#080d1a" }}>
       <div className="max-w-7xl mx-auto px-6">
 
         <div data-header className="mb-14 max-w-2xl">
-          <span className="text-xs font-semibold tracking-widest uppercase text-blue-600 block mb-4">
+          <span className="text-xs font-semibold tracking-widest uppercase block mb-4" style={{ color: "#3b7eff" }}>
             Built for Organizations
           </span>
-          <h2 className="text-4xl md:text-5xl font-semibold text-slate-900 leading-tight tracking-tight mb-4">
+          <h2 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-4" style={{ color: "#f0f4ff" }}>
             Designed for real<br /> organizational environments.
           </h2>
-          <p className="text-lg text-slate-500 leading-relaxed">
+          <p className="text-lg leading-relaxed" style={{ color: "#94a3c4" }}>
             SoloBuildAI is being built with the requirements of real organizational deployment in mind —
             security, integrations, human control, and operational transparency.
           </p>
@@ -102,25 +102,21 @@ export default function EnterpriseFoundation() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {PILLARS.map((p) => (
-            <div key={p.id} data-card className="flex flex-col gap-5 p-8 bg-[#f8fafc] border border-slate-200 rounded-2xl hover:border-blue-100 hover:bg-[#eff6ff] transition-colors duration-200">
+            <div key={p.id} data-card className="flex flex-col gap-5 p-8 rounded-2xl transition-colors duration-200" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
               {/* Icon + label */}
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-center text-blue-600">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "rgba(59,126,255,0.12)", border: "1px solid rgba(59,126,255,0.2)", color: "#3b7eff" }}>
                   {p.icon}
                 </div>
-                <span className="text-xs font-bold uppercase tracking-widest text-blue-600">{p.label}</span>
+                <span className="text-xs font-bold uppercase tracking-widest" style={{ color: "#3b7eff" }}>{p.label}</span>
               </div>
-
-              {/* Content */}
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">{p.headline}</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">{p.body}</p>
+                <h3 className="text-lg font-semibold mb-2" style={{ color: "#f0f4ff" }}>{p.headline}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "#94a3c4" }}>{p.body}</p>
               </div>
-
-              {/* Detail tags */}
-              <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-slate-200">
+              <div className="flex flex-wrap gap-2 mt-auto pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
                 {p.detail.map((d) => (
-                  <span key={d} className="text-xs font-medium text-slate-500 bg-white border border-slate-200 rounded-full px-3 py-1">
+                  <span key={d} className="text-xs font-medium rounded-full px-3 py-1" style={{ color: "#4e607a", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
                     {d}
                   </span>
                 ))}

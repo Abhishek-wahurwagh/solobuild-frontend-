@@ -109,48 +109,57 @@ export default function EnterpriseSolutions() {
     return () => obs.disconnect();
   }, []);
   return (
-    <section ref={sectionRef} className="py-24 bg-[#f8fafc]">
+    <section ref={sectionRef} className="py-24" style={{ backgroundColor: "#0d1426" }}>
       <div className="max-w-7xl mx-auto px-6">
 
         <div data-header className="mb-14">
-          <span className="text-xs font-semibold tracking-widest uppercase text-blue-600 block mb-4">Solutions</span>
-          <h2 className="text-4xl md:text-5xl font-semibold text-slate-900 leading-tight tracking-tight">
+          <span className="text-xs font-semibold tracking-widest uppercase block mb-4" style={{ color: "#3b7eff" }}>Solutions</span>
+          <h2 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight" style={{ color: "#f0f4ff" }}>
             Practical AI across<br /> the organization.
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {SOLUTIONS.map((sol) => (
             <div
               key={sol.id}
               data-card
-              className={`group flex flex-col p-8 rounded-2xl border ${sol.bg} ${sol.border} transition-all duration-200 hover:shadow-md`}
+              className="group flex flex-col p-8 rounded-2xl transition-all duration-200"
+              style={{
+                background: sol.id === "hiring"
+                  ? "rgba(37,99,235,0.12)"
+                  : sol.id === "custom"
+                  ? "rgba(11,23,54,0.8)"
+                  : "rgba(255,255,255,0.03)",
+                border: sol.id === "hiring"
+                  ? "1px solid rgba(59,126,255,0.35)"
+                  : sol.id === "custom"
+                  ? "1px solid rgba(59,126,255,0.25)"
+                  : "1px solid rgba(255,255,255,0.07)",
+              }}
             >
-              {/* Status */}
               <div className="mb-6">
-                <span className={STATUS_BADGE[sol.status]}>
-                  {sol.status === "available" && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-white pulse-dot" />
-                  )}
+                <span
+                  className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest rounded-full px-3 py-1"
+                  style={
+                    sol.status === "available"
+                      ? { background: "#2563eb", color: "#ffffff" }
+                      : sol.status === "custom"
+                      ? { background: "rgba(59,126,255,0.15)", color: "#60a5fa", border: "1px solid rgba(59,126,255,0.3)" }
+                      : { background: "rgba(255,255,255,0.06)", color: "#4e607a", border: "1px solid rgba(255,255,255,0.08)" }
+                  }
+                >
+                  {sol.status === "available" && <span className="w-1.5 h-1.5 rounded-full bg-white pulse-dot" />}
                   {sol.statusLabel}
                 </span>
               </div>
-
-              {/* Title */}
-              <h3 className={`text-xl font-semibold mb-3 ${sol.titleCls}`}>{sol.title}</h3>
-
-              {/* Description */}
-              <p className={`text-sm leading-relaxed flex-1 mb-8 ${sol.descCls}`}>{sol.desc}</p>
-
-              {/* CTA */}
+              <h3 className="text-xl font-semibold mb-3" style={{ color: "#f0f4ff" }}>{sol.title}</h3>
+              <p className="text-sm leading-relaxed flex-1 mb-8" style={{ color: "#94a3c4" }}>{sol.desc}</p>
               {sol.status !== "soon" ? (
                 <Link
                   href={sol.href}
-                  className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors ${
-                    sol.dark
-                      ? "text-blue-300 hover:text-white"
-                      : "text-blue-600 hover:text-blue-700"
-                  } group`}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium transition-colors group"
+                  style={{ color: "#3b7eff" }}
                 >
                   {sol.cta}
                   <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -158,7 +167,7 @@ export default function EnterpriseSolutions() {
                   </svg>
                 </Link>
               ) : (
-                <span className="text-sm font-medium text-slate-400">{sol.cta}</span>
+                <span className="text-sm font-medium" style={{ color: "#3b5a7a" }}>{sol.cta}</span>
               )}
             </div>
           ))}

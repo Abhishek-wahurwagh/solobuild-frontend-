@@ -110,47 +110,46 @@ export default function CapabilityBlocks() {
     return () => { o1?.disconnect(); o2?.disconnect(); };
   }, []);
   return (
-    <section className="py-28 bg-white">
+    <section className="py-24" style={{ backgroundColor: "#080d1a" }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div ref={headerRef} className="mb-16 max-w-2xl">
-          <span className="text-xs font-semibold tracking-widest uppercase text-blue-600 block mb-4">
+        <div ref={headerRef} className="mb-14 max-w-2xl">
+          <span className="text-xs font-semibold tracking-widest uppercase block mb-4" style={{ color: "#3b7eff" }}>
             What SoloBuildAI Does
           </span>
-          <h2 className="text-4xl md:text-5xl font-semibold text-slate-900 leading-tight tracking-tight mb-5">
+          <h2 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-5" style={{ color: "#f0f4ff" }}>
             AI that understands the work<br className="hidden md:block" /> behind the request.
           </h2>
-          <p className="text-lg text-slate-500 leading-relaxed">
+          <p className="text-lg leading-relaxed" style={{ color: "#94a3c4" }}>
             SoloBuildAI builds systems that understand context, guide people through complex processes,
             take action across workflows, and involve humans when the situation requires judgment.
           </p>
         </div>
 
-        {/* Capability blocks — large architectural horizontal layout */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-0 border border-slate-200 rounded-2xl overflow-hidden">
+        {/* Capability blocks */}
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-0 rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
           {CAPABILITIES.map((cap, i) => (
             <div
               key={cap.id}
-              className={`stagger-child flex flex-col p-7 lg:p-8 ${cap.bg} ${i < CAPABILITIES.length - 1 ? "border-b md:border-b-0 md:border-r border-slate-200" : ""} ${cap.dark ? "text-white" : ""}`}
+              className={`flex flex-col p-7 lg:p-8`}
+              style={{
+                background: cap.dark ? "#2563eb" : i % 2 === 0 ? "rgba(255,255,255,0.02)" : "rgba(59,126,255,0.06)",
+                borderRight: i < CAPABILITIES.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none",
+              }}
             >
-              {/* Index */}
-              <span className={`text-[11px] font-bold uppercase tracking-widest mb-6 ${cap.dark ? "text-blue-300" : "text-slate-400"}`}>
+              <span className="text-[11px] font-bold uppercase tracking-widest mb-6" style={{ color: cap.dark ? "rgba(191,219,254,0.7)" : "#3b5a7a" }}>
                 {cap.index}
               </span>
-              {/* Icon */}
-              <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-6 ${cap.dark ? "bg-blue-500 text-white" : "bg-blue-50 text-blue-600"}`}>
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-6" style={{ background: cap.dark ? "rgba(255,255,255,0.15)" : "rgba(59,126,255,0.12)", color: cap.dark ? "#ffffff" : "#3b7eff" }}>
                 {cap.icon}
               </div>
-              {/* Label */}
-              <span className={`text-xs font-semibold uppercase tracking-widest mb-2 ${cap.dark ? "text-blue-200" : cap.accent}`}>
+              <span className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: cap.dark ? "#bfdbfe" : "#3b7eff" }}>
                 {cap.label}
               </span>
-              {/* Headline */}
-              <h3 className={`text-xl font-semibold leading-snug mb-4 whitespace-pre-line ${cap.dark ? "text-white" : "text-slate-900"}`}>
+              <h3 className="text-xl font-semibold leading-snug mb-4 whitespace-pre-line" style={{ color: cap.dark ? "#ffffff" : "#f0f4ff" }}>
                 {cap.headline}
               </h3>
-              {/* Body */}
-              <p className={`text-sm leading-relaxed ${cap.dark ? "text-blue-100" : "text-slate-500"}`}>
+              <p className="text-sm leading-relaxed" style={{ color: cap.dark ? "#bfdbfe" : "#94a3c4" }}>
                 {cap.body}
               </p>
             </div>

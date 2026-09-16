@@ -1,18 +1,41 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-navy-950: #0a0f1e;
-  --color-navy-900: #0d1530;
-  --color-navy-800: #121d3e;
-  --color-navy-700: #1a2a52;
+  /* ── Dark site palette ─────────────────────────────────────────────── */
+  --color-site-bg:       #080d1a;   /* deepest page background            */
+  --color-site-bg-1:     #0d1426;   /* slightly lighter section bg        */
+  --color-site-bg-2:     #0f1b30;   /* mid section bg                     */
+  --color-site-bg-3:     #132040;   /* card / panel bg                    */
 
-  --color-blue-700: #1d4ed8;
-  --color-blue-600: #2563eb;
-  --color-blue-500: #3b82f6;
-  --color-blue-400: #60a5fa;
-  --color-blue-100: #dbeafe;
-  --color-blue-50:  #eff6ff;
+  /* ── Brand blues ──────────────────────────────────────────────────── */
+  --color-blue-700:  #1d4ed8;
+  --color-blue-600:  #2563eb;
+  --color-blue-500:  #3b7eff;   /* primary CTA — bright electric blue   */
+  --color-blue-400:  #60a5fa;
+  --color-blue-300:  #93c5fd;
+  --color-blue-200:  #bfdbfe;
+  --color-blue-100:  #dbeafe;
+  --color-blue-50:   #eff6ff;
 
+  /* ── Navy scale ───────────────────────────────────────────────────── */
+  --color-navy-950:  #080d1a;
+  --color-navy-900:  #0d1426;
+  --color-navy-800:  #0f1b30;
+  --color-navy-700:  #132040;
+  --color-navy-600:  #1a2d54;
+
+  /* ── Surface / border tokens for dark mode ───────────────────────── */
+  --color-surface-1: rgba(255,255,255,0.04);
+  --color-surface-2: rgba(255,255,255,0.07);
+  --color-border-1:  rgba(255,255,255,0.08);
+  --color-border-2:  rgba(255,255,255,0.14);
+
+  /* ── Text on dark ────────────────────────────────────────────────── */
+  --color-text-primary:   #f0f4ff;   /* near-white                        */
+  --color-text-secondary: #94a3c4;   /* muted blue-grey                   */
+  --color-text-muted:     #4e607a;   /* very muted                        */
+
+  /* ── Slate (kept for Navbar / light components) ──────────────────── */
   --color-slate-900: #0f172a;
   --color-slate-800: #1e293b;
   --color-slate-700: #334155;
@@ -34,21 +57,19 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
-  background-color: #ffffff;
-  color: #0a0f1e;
+  background-color: #080d1a;
+  color: #f0f4ff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* ── Scrollbar ───────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+::-webkit-scrollbar-track { background: #0d1426; }
+::-webkit-scrollbar-thumb { background: #1a2d54; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2563eb; }
 
-/* ── Scroll-reveal animations ─────────────────────────────────────────────
-   Classes applied by ScrollReveal.tsx; .visible toggled by IntersectionObserver
-   ──────────────────────────────────────────────────────────────────────────*/
+/* ── Scroll-reveal animations ──────────────────────────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
@@ -65,7 +86,6 @@ body {
 }
 .reveal-scale.visible { opacity: 1; transform: scale(1) translateY(0); }
 
-/* stagger: animates direct children sequentially */
 .stagger > * {
   opacity: 0;
   transform: translateY(16px);
@@ -83,7 +103,7 @@ body {
 .stagger.visible > *:nth-child(9)  { opacity:1; transform:translateY(0); transition-delay:600ms; }
 .stagger.visible > *:nth-child(10) { opacity:1; transform:translateY(0); transition-delay:675ms; }
 
-/* ── SVG line-draw (workflow connections) ───────────────────────────────── */
+/* ── SVG line-draw ──────────────────────────────────────────────────────── */
 .line-draw {
   stroke-dasharray: 600;
   stroke-dashoffset: 600;
@@ -91,45 +111,66 @@ body {
 }
 .line-draw.visible { stroke-dashoffset: 0; }
 
-/* ── Pulse dot (availability indicator) ─────────────────────────────────── */
+/* ── Pulse dot ──────────────────────────────────────────────────────────── */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.5; transform: scale(0.8); }
 }
 .pulse-dot { animation: pulse-dot 2.4s ease-in-out infinite; }
 
-/* ── Subtle dot-grid background overlay ─────────────────────────────────── */
+/* ── Dot-grid bg overlay ────────────────────────────────────────────────── */
 .grid-bg {
   background-image:
-    radial-gradient(circle, rgba(37,99,235,0.07) 1px, transparent 1px);
+    radial-gradient(circle, rgba(59,126,255,0.09) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
-/* ── Hero parallax on scroll ─────────────────────────────────────────────
-   JS sets --hero-scroll via scroll listener; section uses it for subtle shift
-   ──────────────────────────────────────────────────────────────────────────*/
-.hero-parallax {
-  will-change: transform, opacity;
+/* ── Hero parallax ──────────────────────────────────────────────────────── */
+.hero-parallax { will-change: transform, opacity; }
+
+/* ── Dark card / panel utility ──────────────────────────────────────────── */
+.dark-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+}
+.dark-card:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(59,126,255,0.35);
 }
 
-/* ── Workflow card hover ─────────────────────────────────────────────────── */
+/* ── Workflow card hover ────────────────────────────────────────────────── */
 .wf-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .wf-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(37,99,235,0.10);
-  border-color: #93c5fd;
+  box-shadow: 0 8px 28px rgba(37,99,235,0.20);
+  border-color: rgba(59,126,255,0.5);
 }
 .wf-card-active {
-  border-color: #2563eb !important;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.08), 0 8px 24px rgba(37,99,235,0.12);
+  border-color: #3b7eff !important;
+  box-shadow: 0 0 0 3px rgba(59,126,255,0.12), 0 8px 28px rgba(37,99,235,0.18);
 }
 
-/* ── System architecture layer colors ───────────────────────────────────── */
-.layer-person       { background: #ffffff; border-color: #e2e8f0; }
-.layer-interact     { background: #eff6ff; border-color: #bfdbfe; }
-.layer-understand   { background: #dbeafe; border-color: #93c5fd; }
-.layer-reason       { background: #2563eb; border-color: #1d4ed8; }
-.layer-workflow     { background: #1d4ed8; border-color: #1e40af; }
-.layer-human        { background: #eff6ff; border-color: #3b82f6; }
+/* ── Architecture layer colors (dark site) ──────────────────────────────── */
+.layer-person     { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10); }
+.layer-interact   { background: rgba(59,126,255,0.08);  border-color: rgba(59,126,255,0.25); }
+.layer-understand { background: rgba(59,126,255,0.15);  border-color: rgba(59,126,255,0.35); }
+.layer-reason     { background: #2563eb;                border-color: #1d4ed8; }
+.layer-workflow   { background: #1d4ed8;                border-color: #1e40af; }
+.layer-human      { background: rgba(251,191,36,0.08);  border-color: rgba(251,191,36,0.25); }
+
+/* ── Glow effect for electric-blue CTAs ────────────────────────────────── */
+.btn-glow {
+  box-shadow: 0 0 0 0 rgba(59,126,255,0);
+  transition: box-shadow 0.2s ease, background-color 0.15s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 20px rgba(59,126,255,0.35), 0 4px 12px rgba(59,126,255,0.20);
+}
+
+/* ── Section separator (subtle glow line) ───────────────────────────────── */
+.section-sep {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(59,126,255,0.3) 50%, transparent 100%);
+}

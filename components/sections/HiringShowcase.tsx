@@ -31,23 +31,23 @@ export default function HiringShowcase() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 bg-white">
+    <section ref={sectionRef} className="py-24" style={{ backgroundColor: "#0f1b30" }}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* Left — copy */}
           <div data-reveal>
-            <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-3.5 py-1.5 mb-6">
-              <span className="w-2 h-2 rounded-full bg-blue-500 pulse-dot flex-shrink-0" />
-              <span className="text-[11px] font-bold text-blue-600 uppercase tracking-widest">Available Now</span>
+            <div className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 mb-6" style={{ background: "rgba(37,99,235,0.15)", border: "1px solid rgba(59,126,255,0.3)" }}>
+              <span className="w-2 h-2 rounded-full pulse-dot flex-shrink-0" style={{ backgroundColor: "#3b7eff" }} />
+              <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: "#60a5fa" }}>Available Now</span>
             </div>
-            <span className="text-xs font-semibold tracking-widest uppercase text-slate-400 block mb-3">
+            <span className="text-xs font-semibold tracking-widest uppercase block mb-3" style={{ color: "#4e607a" }}>
               AI for Hiring
             </span>
-            <h2 className="text-4xl md:text-5xl font-semibold text-slate-900 leading-tight tracking-tight mb-5">
+            <h2 className="text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-5" style={{ color: "#f0f4ff" }}>
               From job description<br /> to qualified candidate.
             </h2>
-            <p className="text-lg text-slate-500 leading-relaxed mb-8">
+            <p className="text-lg leading-relaxed mb-8" style={{ color: "#94a3c4" }}>
               SoloBuildAI&apos;s hiring solution brings candidate discovery, outreach,
               voice screening, qualification and recruiter workflows into one connected system.
             </p>
@@ -61,29 +61,21 @@ export default function HiringShowcase() {
                 "Give recruiters full context — call summaries, scores, insights",
               ].map((f) => (
                 <div key={f} className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-3 h-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <span className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(59,126,255,0.12)", border: "1px solid rgba(59,126,255,0.25)" }}>
+                    <svg className="w-3 h-3" style={{ color: "#3b7eff" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                   </span>
-                  <span className="text-sm text-slate-600 leading-relaxed">{f}</span>
+                  <span className="text-sm leading-relaxed" style={{ color: "#94a3c4" }}>{f}</span>
                 </div>
               ))}
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Link
-                href="/solutions/hiring"
-                className="px-6 py-3 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 transition-colors shadow-sm"
-              >
+              <Link href="/solutions/hiring" className="btn-glow px-6 py-3 text-white text-sm font-medium rounded-xl transition-colors shadow-sm" style={{ backgroundColor: "#2563eb" }}>
                 Explore AI for Hiring
               </Link>
-              <a
-                href={SIGN_IN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 border border-slate-200 text-slate-700 text-sm font-medium rounded-xl hover:bg-slate-50 transition-colors"
-              >
+              <a href={SIGN_IN_URL} target="_blank" rel="noopener noreferrer" className="px-6 py-3 text-sm font-medium rounded-xl transition-colors" style={{ color: "#94a3c4", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)" }}>
                 Open Hiring Platform
               </a>
             </div>
