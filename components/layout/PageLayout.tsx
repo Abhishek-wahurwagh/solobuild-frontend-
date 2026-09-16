@@ -14,7 +14,7 @@ export default function PageLayout({
       <div className="min-h-screen bg-black p-2 sm:p-3 md:p-4">
         <div className="flex flex-col min-h-[calc(100vh-1rem)] md:min-h-[calc(100vh-2rem)] rounded-[22px] border border-white/12 bg-black overflow-hidden">
           <Navbar framed />
-          <main className="flex-1 px-2 sm:px-3 pb-2 sm:pb-3">{children}</main>
+          <main className="flex-1 px-2 sm:px-3 pt-[70px] sm:pt-[74px] pb-2 sm:pb-3">{children}</main>
           <Footer compact />
         </div>
       </div>

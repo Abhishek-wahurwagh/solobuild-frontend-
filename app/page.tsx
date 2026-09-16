@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import PageLayout from "@/components/layout/PageLayout";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import concreteBuildingImage from "@/app/file_00000000f12481fba98e0793f2268462.png";
 
 const iconClass = "w-5 h-5 text-white";
 
@@ -231,10 +232,10 @@ export default function HomePage() {
       <section className="mt-3 grid grid-cols-1 lg:grid-cols-[0.92fr_1.08fr] gap-3">
         <div className="relative min-h-[420px] lg:min-h-[480px] rounded-2xl border border-white/12 overflow-hidden">
           <Image
-            src="/images/editorial-man.png"
+            src={concreteBuildingImage}
             alt=""
             fill
-            className="object-cover object-[78%_center] grayscale"
+            className="object-cover"
             sizes="(max-width: 1024px) 100vw, 45vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/35" />

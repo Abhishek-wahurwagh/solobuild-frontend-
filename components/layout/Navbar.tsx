@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import logoImage from "@/app/7526.png";
 
 const BRAND = "#0066FF";
 
@@ -197,11 +199,8 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
 function Logo() {
   return (
-    <Link href="/" className="flex items-center flex-shrink-0">
-      <span className="font-semibold text-white text-[17px] tracking-tight">
-        SoloBuildAI
-        <span className="text-[#0066FF] font-bold">+</span>
-      </span>
+    <Link href="/" className="relative flex h-9 w-[132px] items-center flex-shrink-0 overflow-hidden">
+      <Image src={logoImage} alt="SoloBuild" fill sizes="132px" className="object-cover" priority />
     </Link>
   );
 }
@@ -227,36 +226,29 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
       <Logo />
 
       <div className="hidden lg:flex items-center">
-        <Link
-          href="/"
-          className={`relative text-[13px] font-medium px-3 py-2 transition-colors ${
-            isHome ? "text-white" : "text-slate-400 hover:text-white"
-          }`}
-        >
-          Home
-          {isHome && (
-            <span className="absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-[#0066FF]" />
-          )}
-        </Link>
-        {NAV_ITEMS.map((item) => (
-          <NavItem
+        {[
+          { label: "Home", href: "/" },
+          { label: "Solutions", href: "/solutions/hiring" },
+          { label: "Use Cases", href: "/solutions/hiring" },
+          { label: "Pricing", href: "/demo" },
+          { label: "About", href: "/company/about" },
+        ].map((item) => (
+          <Link
             key={item.label}
-            label={item.label}
-            items={item.items}
-            active={activeDropdown === item.label}
-            onOpen={() => handleOpen(item.label)}
-            onClose={handleClose}
-          />
+            href={item.href}
+            className={`relative text-[13px] font-medium px-3 py-2 transition-colors ${
+              item.label === "Home" && isHome ? "text-white" : "text-slate-400 hover:text-white"
+            }`}
+          >
+            {item.label}
+            {item.label === "Home" && isHome && (
+              <span className="absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-[#0066FF]" />
+            )}
+          </Link>
         ))}
       </div>
 
       <div className="hidden lg:flex items-center gap-3">
-        <Link
-          href="/signin"
-          className="px-3 py-1.5 text-[13px] font-medium text-slate-400 hover:text-white transition-colors"
-        >
-          Sign In
-        </Link>
         <Link
           href="/demo"
           className="inline-flex items-center gap-2 px-4 py-2 text-[13px] font-medium text-white border border-white/15 hover:border-white/30 rounded-xl transition-colors"
@@ -291,7 +283,7 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
       <header
         className={
           framed
-            ? "sticky top-0 z-50 bg-black/80 backdrop-blur-md px-2 sm:px-3 pt-2 sm:pt-3"
+            ? "fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md px-2 sm:px-3 pt-2 sm:pt-3"
             : "fixed top-0 left-0 right-0 z-50 bg-black border-b border-white/10"
         }
       >
