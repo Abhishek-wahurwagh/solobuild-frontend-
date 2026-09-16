@@ -4,97 +4,81 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-/* ─── Navigation Data ──────────────────────────────────────────────────── */
-
 const NAV_ITEMS = [
   {
     label: "Platform",
     items: [
-      { label: "AI Employees", href: "/platform/ai-employees", desc: "Deploy autonomous AI workers for your teams" },
-      { label: "AI Agents", href: "/platform/ai-agents", desc: "Task-specific agents that act across tools" },
-      { label: "Voice Intelligence", href: "/platform/voice-intelligence", desc: "Natural voice interaction for any workflow" },
-      { label: "Workflow Automation", href: "/platform/workflow-automation", desc: "Automate multi-step operational processes" },
-      { label: "Integrations", href: "/platform/integrations", desc: "Connect your existing tools and data" },
+      { label: "AI Employees", href: "/platform/ai-employees" },
+      { label: "AI Agents", href: "/platform/ai-agents" },
+      { label: "Voice Intelligence", href: "/platform/voice-intelligence" },
+      { label: "Workflow Automation", href: "/platform/workflow-automation" },
+      { label: "Integrations", href: "/platform/integrations" },
     ],
   },
   {
     label: "Solutions",
     items: [
-      { label: "AI for Hiring", href: "/solutions/hiring", desc: "End-to-end AI-powered recruitment", available: true },
-      { label: "AI for Sales", href: "/solutions/sales", desc: "Intelligent sales workflows and outreach" },
-      { label: "AI for Customer Support", href: "/solutions/customer-support", desc: "AI-first customer service operations" },
-      { label: "AI for Operations", href: "/solutions/operations", desc: "Operational intelligence and automation" },
-      { label: "Custom AI Solutions", href: "/solutions/custom", desc: "Tailored AI for your specific workflow", custom: true },
+      { label: "AI for Hiring", href: "/solutions/hiring", tag: "Live" },
+      { label: "AI for Sales", href: "/solutions/sales" },
+      { label: "AI for Customer Support", href: "/solutions/customer-support" },
+      { label: "AI for Operations", href: "/solutions/operations" },
+      { label: "Custom AI Solutions", href: "/solutions/custom" },
     ],
   },
   {
     label: "Products",
     items: [
-      { label: "Hiring Intelligence", href: "/products/hiring-intelligence", desc: "Complete hiring platform", available: true },
-      { label: "Voice AI", href: "/products/voice-ai", desc: "AI voice for candidate screening" },
-      { label: "Campaigns", href: "/products/campaigns", desc: "Manage outreach at scale" },
-      { label: "Candidate Intelligence", href: "/products/candidate-intelligence", desc: "Deep candidate analytics" },
-      { label: "Analytics", href: "/products/analytics", desc: "Operational insights and reporting" },
+      { label: "Hiring Intelligence", href: "/products/hiring-intelligence", tag: "Live" },
+      { label: "Voice AI", href: "/products/voice-ai" },
+      { label: "Campaigns", href: "/products/campaigns" },
+      { label: "Candidate Intelligence", href: "/products/candidate-intelligence" },
+      { label: "Analytics", href: "/products/analytics" },
     ],
   },
   {
     label: "Resources",
     items: [
-      { label: "Documentation", href: "/resources/documentation", desc: "Integration guides and API docs" },
-      { label: "Case Studies", href: "/resources/case-studies", desc: "Real-world deployment stories" },
-      { label: "Blog", href: "/resources/blog", desc: "Insights on practical AI" },
-      { label: "AI Resources", href: "/resources/ai-resources", desc: "Guides for AI adoption" },
+      { label: "Documentation", href: "/resources/documentation" },
+      { label: "Case Studies", href: "/resources/case-studies" },
+      { label: "Blog", href: "/resources/blog" },
+      { label: "AI Resources", href: "/resources/ai-resources" },
     ],
   },
   {
     label: "Company",
     items: [
-      { label: "About", href: "/company/about", desc: "Our mission and team" },
-      { label: "Security", href: "/company/security", desc: "How we protect your data" },
-      { label: "Contact", href: "/company/contact", desc: "Get in touch" },
-      { label: "Careers", href: "/company/careers", desc: "Join SoloBuildAI" },
+      { label: "About", href: "/company/about" },
+      { label: "Security", href: "/company/security" },
+      { label: "Contact", href: "/company/contact" },
+      { label: "Careers", href: "/company/careers" },
     ],
   },
 ];
 
-/* ─── Dropdown ─────────────────────────────────────────────────────────── */
-
 function Dropdown({ items }: { items: typeof NAV_ITEMS[0]["items"] }) {
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 bg-white rounded-xl border border-slate-200 shadow-xl shadow-slate-900/10 overflow-hidden z-50">
-      <div className="p-1.5">
+    <div className="absolute top-full left-0 mt-0 w-56 bg-black border border-white/10 overflow-hidden z-50">
+      <div className="py-1">
         {items.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className="group flex items-start gap-3 rounded-lg px-3.5 py-3 hover:bg-slate-50 transition-colors duration-100"
+            className="block px-4 py-2 text-xs text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
           >
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-slate-900 group-hover:text-blue-600 transition-colors">
-                  {item.label}
+            <span className="flex items-center justify-between">
+              <span>{item.label}</span>
+              {"tag" in item && item.tag && (
+                <span className="text-[9px] font-semibold text-[#087CF5] border border-[#087CF5]/30 bg-[#087CF5]/10 px-1.5 py-0.5 uppercase">
+                  {item.tag}
                 </span>
-                {"available" in item && item.available && (
-                  <span className="text-[10px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 px-1.5 py-0.5 rounded-full uppercase tracking-wide">
-                    Live
-                  </span>
-                )}
-                {"custom" in item && item.custom && (
-                  <span className="text-[10px] font-semibold bg-slate-100 text-slate-500 border border-slate-200 px-1.5 py-0.5 rounded-full uppercase tracking-wide">
-                    Enquire
-                  </span>
-                )}
-              </div>
-              <p className="text-xs text-slate-400 mt-0.5 leading-snug">{item.desc}</p>
-            </div>
+              )}
+            </span>
           </Link>
         ))}
       </div>
     </div>
   );
 }
-
-/* ─── NavItem ──────────────────────────────────────────────────────────── */
 
 function NavItem({
   label,
@@ -119,21 +103,19 @@ function NavItem({
       onMouseLeave={onClose}
     >
       <button
-        className={`flex items-center gap-1 text-sm font-medium px-3 py-2 rounded-lg transition-colors duration-150 ${
-          active
-            ? "text-blue-600 bg-blue-50"
-            : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+        className={`flex items-center gap-1 text-xs font-medium px-3 py-2 transition-colors ${
+          active ? "text-white" : "text-slate-400 hover:text-white"
         }`}
         aria-haspopup="true"
         aria-expanded={active}
       >
         {label}
         <svg
-          className={`w-3.5 h-3.5 transition-transform duration-200 ${active ? "rotate-180" : ""}`}
+          className={`w-3 h-3 transition-transform ${active ? "rotate-180" : ""}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          strokeWidth={2.5}
+          strokeWidth={2}
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
@@ -142,8 +124,6 @@ function NavItem({
     </div>
   );
 }
-
-/* ─── Mobile Menu ──────────────────────────────────────────────────────── */
 
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -161,96 +141,73 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex flex-col">
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={onClose} />
-      {/* Panel */}
-      <div className="relative mt-[72px] mx-4 bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto">
-        <div className="p-4">
-          {NAV_ITEMS.map((section) => (
-            <div key={section.label} className="mb-1">
-              <button
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-                onClick={() => setExpanded(expanded === section.label ? null : section.label)}
+    <div className="fixed inset-0 z-40 flex flex-col bg-black/95 backdrop-blur-sm">
+      <div className="overflow-y-auto p-6">
+        {NAV_ITEMS.map((section) => (
+          <div key={section.label} className="mb-2">
+            <button
+              className="w-full flex items-center justify-between px-2 py-3 text-sm font-medium text-white hover:text-[#087CF5] transition-colors"
+              onClick={() => setExpanded(expanded === section.label ? null : section.label)}
+            >
+              {section.label}
+              <svg
+                className={`w-4 h-4 transition-transform ${expanded === section.label ? "rotate-180" : ""}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
               >
-                {section.label}
-                <svg
-                  className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${expanded === section.label ? "rotate-180" : ""}`}
-                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {expanded === section.label && (
-                <div className="mt-1 ml-3 space-y-0.5">
-                  {section.items.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors"
-                    >
-                      {item.label}
-                      {"available" in item && item.available && (
-                        <span className="text-[10px] font-semibold bg-blue-50 text-blue-600 border border-blue-100 px-1.5 py-0.5 rounded-full">Live</span>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="border-t border-slate-100 p-4 flex flex-col gap-2.5">
-          <a
-            href="/signin"
-            className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-          >
-            Sign in
-          </a>
-          <Link
-            href="/signup"
-            className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-          >
-            Sign up
-          </Link>
-          <Link
-            href="/demo"
-            className="w-full flex items-center justify-center px-4 py-2.5 rounded-lg bg-blue-600 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
-          >
-            Request a demo
-          </Link>
-        </div>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {expanded === section.label && (
+              <div className="ml-4 space-y-1">
+                {section.items.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="block px-2 py-2 text-xs text-slate-400 hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="border-t border-white/10 p-6 flex flex-col gap-3">
+        <Link
+          href="/signin"
+          className="w-full px-4 py-3 text-sm font-medium text-white border border-white/20 hover:border-white/40 text-center transition-colors"
+        >
+          Sign In
+        </Link>
+        <Link
+          href="/demo"
+          className="w-full px-4 py-3 text-sm font-medium text-white bg-[#087CF5] hover:bg-[#0667c7] text-center transition-colors"
+        >
+          Get Started
+        </Link>
       </div>
     </div>
   );
 }
 
-/* ─── Logo ─────────────────────────────────────────────────────────────── */
-
 function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-      <span className="font-bold text-slate-900 text-lg tracking-tight">
-        Solo<span className="text-blue-600">Build</span>
-        <span className="text-xs align-super text-blue-600 ml-0.5">+</span>
+    <Link href="/" className="flex items-center gap-0 flex-shrink-0">
+      <span className="font-bold text-white text-base tracking-tight">
+        SoloBuildAI
       </span>
     </Link>
   );
 }
 
-/* ─── Main Navbar ──────────────────────────────────────────────────────── */
-
 export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleOpen = useCallback((label: string) => {
     if (closeTimeout.current) clearTimeout(closeTimeout.current);
@@ -263,26 +220,12 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Floating Navbar */}
-      <header
-        className={`fixed top-3 left-4 right-4 z-50 transition-all duration-300 ${
-          scrolled
-            ? "shadow-lg shadow-slate-900/10"
-            : "shadow-md shadow-slate-900/8"
-        }`}
-        style={{ maxWidth: "calc(100% - 2rem)" }}
-      >
-        <nav
-          className={`w-full rounded-2xl border bg-white/95 backdrop-blur-md transition-all duration-300 ${
-            scrolled ? "border-slate-200/80" : "border-slate-200/60"
-          }`}
-        >
-          <div className="flex items-center justify-between px-4 py-3 gap-4">
-            {/* Left: Logo */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-white/10">
+        <nav className="max-w-[1600px] mx-auto px-6">
+          <div className="flex items-center justify-between h-14">
             <Logo />
 
-            {/* Center: Nav Items (desktop) */}
-            <div className="hidden lg:flex items-center gap-0.5">
+            <div className="hidden lg:flex items-center gap-1">
               {NAV_ITEMS.map((item) => (
                 <NavItem
                   key={item.label}
@@ -295,40 +238,23 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Right: Actions (desktop) */}
             <div className="hidden lg:flex items-center gap-2">
-              {/* Search icon */}
-              <button
-                className="p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-                aria-label="Search"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-              </button>
               <Link
                 href="/signin"
-                className="px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
+                className="px-4 py-1.5 text-xs font-medium text-slate-300 hover:text-white transition-colors"
               >
-                Sign in
-              </Link>
-              <Link
-                href="/signup"
-                className="px-3.5 py-2 text-sm font-medium text-slate-700 border border-slate-200 bg-white hover:bg-slate-50 rounded-lg transition-colors"
-              >
-                Sign up
+                Sign In
               </Link>
               <Link
                 href="/demo"
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm"
+                className="px-4 py-1.5 text-xs font-medium text-white bg-[#087CF5] hover:bg-[#0667c7] transition-colors border border-[#087CF5]"
               >
-                Request a demo
+                Get Started →
               </Link>
             </div>
 
-            {/* Mobile: Hamburger */}
             <button
-              className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-2 text-white"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -346,11 +272,9 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* Mobile Menu */}
       <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
 
-      {/* Spacer so content doesn't go under navbar */}
-      <div className="h-20" />
+      <div className="h-14" />
     </>
   );
 }

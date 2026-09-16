@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import Link from "next/link";
 
 /* 
   CAROUSEL SLIDES
-  ─────────────────────────────────────────────────────────────────────────
+  -------------------------------------------------------------------------
   To replace mock images with real screenshots:
   1. Add your screenshot to /public/images/
   2. Update the `image` field in the slides array below
@@ -247,3 +247,4 @@ export default function ProductCarousel() {  const [active, setActive] = useStat
     </section>
   );
 }
+

@@ -38,19 +38,18 @@ const FOOTER_LINKS = {
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: "#000000", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-      <div className="max-w-7xl mx-auto px-6 py-16">
+    <footer className="bg-black border-t border-white/10">
+      <div className="max-w-[1400px] mx-auto px-6 py-16">
         {/* Top row */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-14">
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <Link href="/" className="inline-block mb-4">
+            <Link href="/" className="inline-block mb-6">
               <span className="font-bold text-white text-lg tracking-tight">
-                Solo<span className="text-blue-500">Build</span>
-                <span className="text-xs align-super text-blue-500 ml-0.5">+</span>
+                SoloBuildAI
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-slate-500">
+            <p className="text-xs leading-relaxed text-slate-600">
               AI agents for real work.
             </p>
           </div>
@@ -58,15 +57,15 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([section, links]) => (
             <div key={section}>
-              <h3 className="text-xs font-semibold uppercase tracking-wider mb-4 text-slate-400">
+              <h3 className="text-[10px] font-semibold uppercase tracking-wider mb-4 text-slate-500">
                 {section}
               </h3>
-              <ul className="space-y-2.5">
+              <ul className="space-y-2">
                 {links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
+                      className="text-xs text-slate-600 hover:text-white transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -78,8 +77,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom row */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/8">
-          <p className="text-xs text-slate-600">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10">
+          <p className="text-[10px] text-slate-700">
             © {new Date().getFullYear()} SoloBuildAI. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
@@ -91,7 +90,7 @@ export default function Footer() {
               <Link 
                 key={href} 
                 href={href} 
-                className="text-xs text-slate-600 hover:text-slate-400 transition-colors"
+                className="text-[10px] text-slate-700 hover:text-slate-400 transition-colors"
               >
                 {label}
               </Link>
