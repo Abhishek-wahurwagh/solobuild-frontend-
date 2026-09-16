@@ -36,17 +36,64 @@ const FOOTER_LINKS = {
   ],
 };
 
-export default function Footer() {
+const COMPACT_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "Solutions", href: "/solutions/hiring" },
+  { label: "Products", href: "/products/hiring-intelligence" },
+  { label: "Platform", href: "/platform/ai-agents" },
+  { label: "Company", href: "/company/about" },
+];
+
+export default function Footer({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <footer className="px-2 sm:px-3 pb-2 sm:pb-3">
+        <div className="rounded-2xl border border-white/12 bg-black px-5 sm:px-6 py-4">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+            <Link href="/" className="font-semibold text-white text-[15px] tracking-tight flex-shrink-0">
+              SoloBuildAI<span className="text-[#0066FF] font-bold">+</span>
+            </Link>
+
+            <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 lg:mx-auto">
+              {COMPACT_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-[13px] text-slate-400 hover:text-white transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Link href="/legal/privacy" className="text-[13px] text-slate-400 hover:text-white transition-colors">
+                Privacy
+              </Link>
+              <Link href="/legal/terms" className="text-[13px] text-slate-400 hover:text-white transition-colors">
+                Terms
+              </Link>
+            </nav>
+
+            <div className="flex items-center justify-between lg:justify-end gap-6 flex-shrink-0">
+              <p className="text-[11px] text-slate-500">
+                © {new Date().getFullYear()} SoloBuildAI. All rights reserved.
+              </p>
+              <p className="hidden md:block text-[10px] font-medium tracking-[0.18em] uppercase text-slate-500 text-right leading-relaxed">
+                Same<br />spark.<br />Bigger<br />outcomes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="bg-black border-t border-white/10">
       <div className="max-w-[1400px] mx-auto px-6 py-16">
-        {/* Top row */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-14">
-          {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
               <span className="font-bold text-white text-lg tracking-tight">
-                SoloBuildAI
+                SoloBuildAI<span className="text-[#0066FF]">+</span>
               </span>
             </Link>
             <p className="text-xs leading-relaxed text-slate-600">
@@ -54,7 +101,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([section, links]) => (
             <div key={section}>
               <h3 className="text-[10px] font-semibold uppercase tracking-wider mb-4 text-slate-500">
@@ -76,7 +122,6 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom row */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10">
           <p className="text-[10px] text-slate-700">
             © {new Date().getFullYear()} SoloBuildAI. All rights reserved.
@@ -87,9 +132,9 @@ export default function Footer() {
               { label: "Terms", href: "/legal/terms" },
               { label: "Cookies", href: "/legal/cookies" },
             ].map(({ label, href }) => (
-              <Link 
-                key={href} 
-                href={href} 
+              <Link
+                key={href}
+                href={href}
                 className="text-[10px] text-slate-700 hover:text-slate-400 transition-colors"
               >
                 {label}

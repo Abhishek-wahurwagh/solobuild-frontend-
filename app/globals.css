@@ -8,10 +8,11 @@
   --color-site-bg-3:     #132040;   /* card / panel bg                    */
 
   /* ── Brand blues ──────────────────────────────────────────────────── */
-  --color-blue-700:  #1d4ed8;
-  --color-blue-600:  #2563eb;
-  --color-blue-500:  #3b7eff;   /* primary CTA — bright electric blue   */
-  --color-blue-400:  #60a5fa;
+  --color-brand:     #0066FF;   /* sole brand accent                     */
+  --color-blue-700:  #0052cc;
+  --color-blue-600:  #0066FF;
+  --color-blue-500:  #0066FF;   /* primary CTA — exact brand blue        */
+  --color-blue-400:  #3385ff;
   --color-blue-300:  #93c5fd;
   --color-blue-200:  #bfdbfe;
   --color-blue-100:  #dbeafe;
@@ -67,7 +68,7 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #000000; }
 ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+::-webkit-scrollbar-thumb:hover { background: #0066FF; }
 
 /* ── Scroll-reveal animations ──────────────────────────────────────────── */
 .reveal {
