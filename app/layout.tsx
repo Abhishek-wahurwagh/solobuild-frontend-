@@ -10,14 +10,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SoloBuildAI — Practical AI for Real Work",
+  title: "SoloBuildAI — AI Agents for Real Work",
   description:
-    "We build practical AI systems that understand your workflows, guide decisions, perform tasks and involve humans when needed.",
-  keywords: ["AI", "hiring", "workflows", "automation", "voice AI", "enterprise AI"],
+    "Build, deploy and scale AI agents, workflows and tools to turn your ideas into real outcomes — without the usual complexity.",
+  keywords: ["AI agents", "AI automation", "hiring AI", "workflow automation", "voice AI", "enterprise AI", "SoloBuild"],
   openGraph: {
-    title: "SoloBuildAI — Practical AI for Real Work",
+    title: "SoloBuildAI — AI Agents for Real Work",
     description:
-      "We build practical AI systems that understand your workflows, guide decisions, perform tasks and involve humans when needed.",
+      "Build, deploy and scale AI agents, workflows and tools to turn your ideas into real outcomes — without the usual complexity.",
     type: "website",
   },
 };

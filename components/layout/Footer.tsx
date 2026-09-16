@@ -38,31 +38,27 @@ const FOOTER_LINKS = {
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: "#060b16", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+    <footer style={{ backgroundColor: "#000000", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Top row */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-14">
           {/* Brand */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg viewBox="0 0 24 24" className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-                </svg>
-              </div>
-              <span className="font-semibold text-[15px] tracking-tight" style={{ color: "#f0f4ff" }}>
-                SoloBuild<span style={{ color: "#3b7eff" }}>AI</span>
+            <Link href="/" className="inline-block mb-4">
+              <span className="font-bold text-white text-lg tracking-tight">
+                Solo<span className="text-blue-500">Build</span>
+                <span className="text-xs align-super text-blue-500 ml-0.5">+</span>
               </span>
             </Link>
-            <p className="text-sm leading-relaxed" style={{ color: "#3b5a7a" }}>
-              Practical AI for real work.
+            <p className="text-sm leading-relaxed text-slate-500">
+              AI agents for real work.
             </p>
           </div>
 
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([section, links]) => (
             <div key={section}>
-              <h3 className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: "#94a3c4" }}>
+              <h3 className="text-xs font-semibold uppercase tracking-wider mb-4 text-slate-400">
                 {section}
               </h3>
               <ul className="space-y-2.5">
@@ -70,8 +66,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm transition-colors"
-                      style={{ color: "#3b5a7a" }}
+                      className="text-sm text-slate-500 hover:text-slate-300 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -83,17 +78,21 @@ export default function Footer() {
         </div>
 
         {/* Bottom row */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-          <p className="text-xs" style={{ color: "#3b5a7a" }}>
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/8">
+          <p className="text-xs text-slate-600">
             © {new Date().getFullYear()} SoloBuildAI. All rights reserved.
           </p>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-6">
             {[
               { label: "Privacy", href: "/legal/privacy" },
               { label: "Terms", href: "/legal/terms" },
               { label: "Cookies", href: "/legal/cookies" },
             ].map(({ label, href }) => (
-              <Link key={href} href={href} className="text-xs transition-colors" style={{ color: "#3b5a7a" }}>
+              <Link 
+                key={href} 
+                href={href} 
+                className="text-xs text-slate-600 hover:text-slate-400 transition-colors"
+              >
                 {label}
               </Link>
             ))}
