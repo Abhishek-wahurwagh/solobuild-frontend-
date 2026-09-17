@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import logoImage from "@/app/7526.png";
 
 const FOOTER_LINKS = {
   Platform: [
@@ -9,6 +11,7 @@ const FOOTER_LINKS = {
     { label: "Integrations", href: "/platform/integrations" },
   ],
   Solutions: [
+    { label: "AI for HR", href: "/solutions/ai-for-hr" },
     { label: "AI for Hiring", href: "/solutions/hiring" },
     { label: "AI for Sales", href: "/solutions/sales" },
     { label: "AI for Customer Support", href: "/solutions/customer-support" },
@@ -38,20 +41,21 @@ const FOOTER_LINKS = {
 
 const COMPACT_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Solutions", href: "/solutions/hiring" },
-  { label: "Products", href: "/products/hiring-intelligence" },
   { label: "Platform", href: "/platform/ai-agents" },
+  { label: "Solutions", href: "/solutions/ai-for-hr" },
+  { label: "Products", href: "/products/hiring-intelligence" },
+  { label: "Resources", href: "/resources/ai-resources" },
   { label: "Company", href: "/company/about" },
 ];
 
-export default function Footer({ compact = false }: { compact?: boolean }) {
+export default function Footer({ compact = false, wide = false }: { compact?: boolean; wide?: boolean }) {
   if (compact) {
     return (
-      <footer className="px-2 sm:px-3 pb-2 sm:pb-3">
+      <footer className={`${wide ? "px-0" : "px-2 sm:px-3"} pb-2 sm:pb-3`}>
         <div className="rounded-2xl border border-white/12 bg-black px-5 sm:px-6 py-4">
           <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-            <Link href="/" className="font-semibold text-white text-[15px] tracking-tight flex-shrink-0">
-              SoloBuildAI<span className="text-[#0066FF] font-bold">+</span>
+            <Link href="/" className="relative flex h-9 w-[132px] items-center flex-shrink-0 overflow-hidden">
+              <Image src={logoImage} alt="SoloBuildAI" fill sizes="132px" className="object-cover" priority />
             </Link>
 
             <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 lg:mx-auto">
@@ -77,7 +81,7 @@ export default function Footer({ compact = false }: { compact?: boolean }) {
                 © {new Date().getFullYear()} SoloBuildAI. All rights reserved.
               </p>
               <p className="hidden md:block text-[10px] font-medium tracking-[0.18em] uppercase text-slate-500 text-right leading-relaxed">
-                Same<br />spark.<br />Bigger<br />outcomes.
+                Same<br />people.<br />Bigger<br />outcomes.
               </p>
             </div>
           </div>
@@ -91,10 +95,8 @@ export default function Footer({ compact = false }: { compact?: boolean }) {
       <div className="max-w-[1400px] mx-auto px-6 py-16">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-14">
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <Link href="/" className="inline-block mb-6">
-              <span className="font-bold text-white text-lg tracking-tight">
-                SoloBuildAI<span className="text-[#0066FF]">+</span>
-              </span>
+            <Link href="/" className="relative mb-6 flex h-9 w-[132px] items-center overflow-hidden">
+              <Image src={logoImage} alt="SoloBuildAI" fill sizes="132px" className="object-cover" priority />
             </Link>
             <p className="text-xs leading-relaxed text-slate-600">
               AI agents for real work.

@@ -22,6 +22,7 @@ const NAV_ITEMS = [
   {
     label: "Solutions",
     items: [
+      { label: "AI for HR", href: "/solutions/ai-for-hr", tag: "New" },
       { label: "AI for Hiring", href: "/solutions/hiring", tag: "Live" },
       { label: "AI for Sales", href: "/solutions/sales" },
       { label: "AI for Customer Support", href: "/solutions/customer-support" },

@@ -175,3 +175,19 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(59,126,255,0.3) 50%, transparent 100%);
 }
+
+@keyframes hr-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.hr-marquee-track {
+  animation: hr-marquee 34s linear infinite;
+  width: max-content;
+}
+
+.hr-marquee:hover .hr-marquee-track { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hr-marquee-track { animation-play-state: paused; }
+}

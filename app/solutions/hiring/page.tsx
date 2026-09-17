@@ -4,6 +4,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import HiringWorkflow from "@/components/sections/HiringWorkflow";
 import HeroSignin from "@/components/sections/HeroSignin";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import TalentAcquisitionPage from "./TalentAcquisitionPage";
 
 const CAPABILITIES = [
   {
@@ -55,7 +56,7 @@ const SCREENSHOTS = [
   { src: "/images/hiring-dashboard-4.png", alt: "Candidate Skills Breakdown" },
 ];
 
-export default function HiringSolutionPage() {
+export function LegacyHiringSolutionPage() {
   return (
     <PageLayout>
 
@@ -234,3 +235,5 @@ export default function HiringSolutionPage() {
     </PageLayout>
   );
 }
+
+export default TalentAcquisitionPage;
