@@ -1,0 +1,50 @@
+import type { SolutionDef } from "./types";
+
+export const IT_SOLUTION: SolutionDef = {
+  id: "it",
+  slug: "it",
+  name: "IT Solutions",
+  tagline: "Service. Support. Automation.",
+  description: "AI agents to automate IT support, service operations, and email-based workflows — so your IT team spends less time on routine requests and more time on work that matters.",
+  eyebrow: "Solutions / IT",
+  heroQuote: "AI agents that resolve IT requests, manage services, and automate email operations.",
+  stats: [
+    { value: "3",   label: "IT Workflows" },
+    { value: "27+", label: "Ready-to-use Plugins" },
+    { value: "5+",  label: "Integrations" },
+    { value: "50%", label: "Ticket Deflection" },
+  ],
+  processes: [
+    {
+      id: "it-support",
+      title: "IT Support",
+      description: "Resolve employee IT requests from intake to closure with AI guidance.",
+      pluginCount: "10 plugins",
+      integrationCount: "2 integrations",
+      href: "/solutions/it/it-support",
+      icon: "wrench",
+      live: true,
+    },
+    {
+      id: "service-operations",
+      title: "Service Operations",
+      description: "Manage IT service requests, approvals, provisioning, and change control.",
+      pluginCount: "9 plugins",
+      integrationCount: "2 integrations",
+      href: "/solutions/it/service-operations",
+      icon: "cog",
+      live: true,
+    },
+    {
+      id: "email-automation",
+      title: "Email Automation",
+      description: "Classify, route, and respond to operational emails automatically.",
+      pluginCount: "9 plugins",
+      integrationCount: "2 integrations",
+      href: "/solutions/it/email-automation",
+      icon: "mail",
+      live: true,
+    },
+  ],
+  integrationNames: ["ServiceNow", "Jira", "Confluence", "Slack", "Microsoft Teams", "Gmail", "Outlook"],
+};

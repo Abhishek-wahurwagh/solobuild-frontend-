@@ -8,98 +8,150 @@ import logoImage from "@/app/7526.png";
 
 const BRAND = "#0066FF";
 
+// ─── Navigation Data ──────────────────────────────────────────────────────────
+
+type NavItem = {
+  label: string;
+  href: string;
+  tag?: string;
+  /** Visual section header inside the dropdown — not a link */
+  isGroup?: boolean;
+};
+
+const SOLUTIONS_ITEMS: NavItem[] = [
+  // ── HR ──────────────────────────────────────────────────────────────────
+  { label: "HR Solutions",                 href: "/solutions/hr",                     isGroup: true },
+  { label: "Talent Acquisition",           href: "/solutions/hr/talent-acquisition",  tag: "Live" },
+  { label: "Employee Onboarding",          href: "/solutions/hr" },
+  { label: "Learning & Development",       href: "/solutions/hr" },
+  // ── Sales ────────────────────────────────────────────────────────────────
+  { label: "Sales",                        href: "/solutions/sales",                  isGroup: true },
+  { label: "Lead Management",              href: "/solutions/sales/lead-management",  tag: "Live" },
+  { label: "Sales Outreach",               href: "/solutions/sales" },
+  { label: "Pipeline Management",          href: "/solutions/sales" },
+  // ── Customer Support ─────────────────────────────────────────────────────
+  { label: "Customer Support",             href: "/solutions/customer-support",       isGroup: true },
+  { label: "Support Workflow",             href: "/solutions/customer-support/support-workflow", tag: "Live" },
+  { label: "Escalation Management",        href: "/solutions/customer-support" },
+  // ── IT ───────────────────────────────────────────────────────────────────
+  { label: "IT Solutions",                 href: "/solutions/it",                     isGroup: true },
+  { label: "IT Support",                   href: "/solutions/it/it-support",          tag: "Live" },
+  { label: "Service Operations",           href: "/solutions/it/service-operations",  tag: "Live" },
+  { label: "Email Automation",             href: "/solutions/it/email-automation",    tag: "Live" },
+  // ── Custom ───────────────────────────────────────────────────────────────
+  { label: "Custom AI Solutions",          href: "/solutions/custom" },
+];
+
 const NAV_ITEMS = [
   {
     label: "Platform",
     items: [
-      { label: "AI Employees", href: "/platform/ai-employees" },
-      { label: "AI Agents", href: "/platform/ai-agents" },
-      { label: "Voice Intelligence", href: "/platform/voice-intelligence" },
-      { label: "Workflow Automation", href: "/platform/workflow-automation" },
-      { label: "Integrations", href: "/platform/integrations" },
-    ],
+      { label: "AI Employees",         href: "/platform/ai-employees" },
+      { label: "AI Agents",            href: "/platform/ai-agents" },
+      { label: "Voice Intelligence",   href: "/platform/voice-intelligence" },
+      { label: "Workflow Automation",  href: "/platform/workflow-automation" },
+      { label: "Integrations",         href: "/platform/integrations" },
+    ] as NavItem[],
   },
   {
     label: "Solutions",
-    items: [
-      { label: "AI for HR", href: "/solutions/ai-for-hr", tag: "New" },
-      { label: "AI for Hiring", href: "/solutions/hiring", tag: "Live" },
-      { label: "AI for Sales", href: "/solutions/sales" },
-      { label: "AI for Customer Support", href: "/solutions/customer-support" },
-      { label: "AI for Operations", href: "/solutions/operations" },
-      { label: "Custom AI Solutions", href: "/solutions/custom" },
-    ],
+    items: SOLUTIONS_ITEMS,
   },
   {
     label: "Products",
     items: [
-      { label: "Hiring Intelligence", href: "/products/hiring-intelligence", tag: "Live" },
-      { label: "Voice AI", href: "/products/voice-ai" },
-      { label: "Campaigns", href: "/products/campaigns" },
-      { label: "Candidate Intelligence", href: "/products/candidate-intelligence" },
-      { label: "Analytics", href: "/products/analytics" },
-    ],
+      { label: "Hiring Intelligence",      href: "/products/hiring-intelligence", tag: "Live" },
+      { label: "Voice AI",                 href: "/products/voice-ai" },
+      { label: "Campaigns",                href: "/products/campaigns" },
+      { label: "Candidate Intelligence",   href: "/products/candidate-intelligence" },
+      { label: "Analytics",                href: "/products/analytics" },
+    ] as NavItem[],
   },
   {
     label: "Resources",
     items: [
-      { label: "Documentation", href: "/resources/documentation" },
-      { label: "Case Studies", href: "/resources/case-studies" },
-      { label: "Blog", href: "/resources/blog" },
-      { label: "AI Resources", href: "/resources/ai-resources" },
-    ],
+      { label: "Documentation",  href: "/resources/documentation" },
+      { label: "Case Studies",   href: "/resources/case-studies" },
+      { label: "Blog",           href: "/resources/blog" },
+      { label: "AI Resources",   href: "/resources/ai-resources" },
+    ] as NavItem[],
   },
   {
     label: "Company",
     items: [
-      { label: "About", href: "/company/about" },
+      { label: "About",    href: "/company/about" },
       { label: "Security", href: "/company/security" },
-      { label: "Contact", href: "/company/contact" },
-      { label: "Careers", href: "/company/careers" },
-    ],
+      { label: "Contact",  href: "/company/contact" },
+      { label: "Careers",  href: "/company/careers" },
+    ] as NavItem[],
   },
 ];
 
-function Dropdown({ items }: { items: typeof NAV_ITEMS[0]["items"] }) {
+// ─── Dropdown ─────────────────────────────────────────────────────────────────
+
+// Solutions dropdown is wider to accommodate the grouped structure
+function Dropdown({ items, wide }: { items: NavItem[]; wide?: boolean }) {
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-black border border-white/12 rounded-xl overflow-hidden z-50 shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
-      <div className="py-1">
-        {items.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="block px-4 py-2.5 text-[13px] text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
-          >
-            <span className="flex items-center justify-between gap-2">
+    <div
+      className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-black border border-white/12 rounded-xl overflow-hidden z-50 shadow-[0_12px_40px_rgba(0,0,0,0.45)] ${
+        wide ? "w-72" : "w-56"
+      }`}
+    >
+      <div className="py-1.5">
+        {items.map((item, i) =>
+          item.isGroup ? (
+            // Section header — not a link
+            <div
+              key={`group-${i}`}
+              className={`px-4 pt-3 pb-1.5 ${i > 0 ? "mt-1 border-t border-white/8" : ""}`}
+            >
+              <Link
+                href={item.href}
+                className="text-[10px] font-semibold uppercase tracking-[0.18em] transition-colors hover:opacity-80"
+                style={{ color: BRAND }}
+              >
+                {item.label} →
+              </Link>
+            </div>
+          ) : (
+            <Link
+              key={item.href + i}
+              href={item.href}
+              className="flex items-center justify-between gap-2 px-4 py-2 text-[13px] text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+            >
               <span>{item.label}</span>
-              {"tag" in item && item.tag && (
+              {item.tag && (
                 <span
-                  className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded"
+                  className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0"
                   style={{ color: BRAND, border: `1px solid ${BRAND}4D`, background: `${BRAND}1A` }}
                 >
                   {item.tag}
                 </span>
               )}
-            </span>
-          </Link>
-        ))}
+            </Link>
+          )
+        )}
       </div>
     </div>
   );
 }
 
-function NavItem({
+// ─── NavItem ──────────────────────────────────────────────────────────────────
+
+function NavItemButton({
   label,
   items,
   active,
   onOpen,
   onClose,
+  wide,
 }: {
   label: string;
-  items: typeof NAV_ITEMS[0]["items"];
+  items: NavItem[];
   active: boolean;
   onOpen: () => void;
   onClose: () => void;
+  wide?: boolean;
 }) {
   return (
     <div className="relative" onMouseEnter={onOpen} onMouseLeave={onClose}>
@@ -121,10 +173,12 @@ function NavItem({
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {active && <Dropdown items={items} />}
+      {active && <Dropdown items={items} wide={wide} />}
     </div>
   );
 }
+
+// ─── Mobile Menu ──────────────────────────────────────────────────────────────
 
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -147,6 +201,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         <Link href="/" className="block px-2 py-3 text-sm font-medium text-white">
           Home
         </Link>
+
         {NAV_ITEMS.map((section) => (
           <div key={section.label} className="mb-2">
             <button
@@ -164,22 +219,48 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
+
             {expanded === section.label && (
-              <div className="ml-4 space-y-1">
-                {section.items.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="block px-2 py-2 text-xs text-slate-400 hover:text-white transition-colors"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+              <div className="ml-4 space-y-0.5">
+                {section.items.map((item, i) =>
+                  item.isGroup ? (
+                    // Group header in mobile
+                    <div
+                      key={`mob-group-${i}`}
+                      className={`px-2 pt-3 pb-1 ${i > 0 ? "mt-1" : ""}`}
+                    >
+                      <Link
+                        href={item.href}
+                        className="text-[10px] font-semibold uppercase tracking-[0.18em]"
+                        style={{ color: BRAND }}
+                      >
+                        {item.label} →
+                      </Link>
+                    </div>
+                  ) : (
+                    <Link
+                      key={item.href + i}
+                      href={item.href}
+                      className="flex items-center justify-between px-2 py-2 text-xs text-slate-400 hover:text-white transition-colors"
+                    >
+                      <span>{item.label}</span>
+                      {item.tag && (
+                        <span
+                          className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded"
+                          style={{ color: BRAND, border: `1px solid ${BRAND}4D`, background: `${BRAND}1A` }}
+                        >
+                          {item.tag}
+                        </span>
+                      )}
+                    </Link>
+                  )
+                )}
               </div>
             )}
           </div>
         ))}
       </div>
+
       <div className="border-t border-white/10 p-6 flex flex-col gap-3">
         <Link
           href="/signin"
@@ -198,6 +279,8 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   );
 }
 
+// ─── Logo ─────────────────────────────────────────────────────────────────────
+
 function Logo() {
   return (
     <Link href="/" className="relative flex h-9 w-[132px] items-center flex-shrink-0 overflow-hidden">
@@ -205,6 +288,8 @@ function Logo() {
     </Link>
   );
 }
+
+// ─── Main Navbar ──────────────────────────────────────────────────────────────
 
 export default function Navbar({ framed = false }: { framed?: boolean }) {
   const pathname = usePathname();
@@ -222,10 +307,19 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
     closeTimeout.current = setTimeout(() => setActiveDropdown(null), 120);
   }, []);
 
+  // Desktop nav items — ordered: Solutions | Platform | Products | About
+  const desktopNav = [
+    { label: "Solutions",  items: NAV_ITEMS[1].items, wide: true  },
+    { label: "Platform",   items: NAV_ITEMS[0].items, wide: false },
+    { label: "Products",   items: NAV_ITEMS[2].items, wide: false },
+    { label: "About",      items: NAV_ITEMS[4].items, wide: false },
+  ];
+
   const inner = (
     <div className={`flex items-center justify-between h-[58px] ${framed ? "px-5 sm:px-6" : "px-6"}`}>
       <Logo />
 
+      {/* Desktop navigation */}
       <div className="hidden lg:flex items-center">
         <Link
           href="/"
@@ -238,23 +332,21 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
             <span className="absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-[#0066FF]" />
           )}
         </Link>
-        {[
-          { label: "Solutions", items: NAV_ITEMS[1].items },
-          { label: "Use Cases", items: NAV_ITEMS[0].items },
-          { label: "Pricing", items: NAV_ITEMS[2].items },
-          { label: "About", items: NAV_ITEMS[4].items },
-        ].map((item) => (
-          <NavItem
+
+        {desktopNav.map((item) => (
+          <NavItemButton
             key={item.label}
             label={item.label}
             items={item.items}
             active={activeDropdown === item.label}
             onOpen={() => handleOpen(item.label)}
             onClose={handleClose}
+            wide={item.wide}
           />
         ))}
       </div>
 
+      {/* Desktop right actions */}
       <div className="hidden lg:flex items-center gap-3">
         <Link
           href="/demo"
@@ -267,6 +359,7 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
         </Link>
       </div>
 
+      {/* Mobile hamburger */}
       <button
         className="lg:hidden p-2 text-white relative z-50"
         onClick={() => setMobileOpen(!mobileOpen)}
