@@ -188,6 +188,23 @@ body {
 
 .hr-marquee:hover .hr-marquee-track { animation-play-state: paused; }
 
+/* ── Plugin rail (homepage — slower, left-to-right) ─────────────────────── */
+@keyframes plugin-rail {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.plugin-rail-track {
+  animation: plugin-rail 48s linear infinite;
+  width: max-content;
+  will-change: transform;
+}
+
+.plugin-rail-wrap:hover .plugin-rail-track {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .hr-marquee-track { animation-play-state: paused; }
+  .hr-marquee-track,
+  .plugin-rail-track { animation-play-state: paused; }
 }
