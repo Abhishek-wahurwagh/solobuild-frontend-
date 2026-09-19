@@ -140,6 +140,7 @@ function Dropdown({ items, wide }: { items: NavItem[]; wide?: boolean }) {
 
 function NavItemButton({
   label,
+  href,
   items,
   active,
   onOpen,
@@ -147,6 +148,7 @@ function NavItemButton({
   wide,
 }: {
   label: string;
+  href?: string;
   items: NavItem[];
   active: boolean;
   onOpen: () => void;
@@ -155,24 +157,38 @@ function NavItemButton({
 }) {
   return (
     <div className="relative" onMouseEnter={onOpen} onMouseLeave={onClose}>
-      <button
-        className={`flex items-center gap-1 text-[13px] font-medium px-3 py-2 transition-colors ${
-          active ? "text-white" : "text-slate-400 hover:text-white"
-        }`}
-        aria-haspopup="true"
-        aria-expanded={active}
-      >
-        {label}
-        <svg
-          className={`w-3 h-3 transition-transform ${active ? "rotate-180" : ""}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
+      {href ? (
+        <Link
+          href={href}
+          className={`flex items-center gap-1 text-[13px] font-medium px-3 py-2 transition-colors ${
+            active ? "text-white" : "text-slate-400 hover:text-white"
+          }`}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
+          {label}
+          <svg
+            className={`w-3 h-3 transition-transform ${active ? "rotate-180" : ""}`}
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </Link>
+      ) : (
+        <button
+          className={`flex items-center gap-1 text-[13px] font-medium px-3 py-2 transition-colors ${
+            active ? "text-white" : "text-slate-400 hover:text-white"
+          }`}
+          aria-haspopup="true"
+          aria-expanded={active}
+        >
+          {label}
+          <svg
+            className={`w-3 h-3 transition-transform ${active ? "rotate-180" : ""}`}
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      )}
       {active && <Dropdown items={items} wide={wide} />}
     </div>
   );
@@ -309,10 +325,10 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
 
   // Desktop nav items — ordered: Solutions | Platform | Products | About
   const desktopNav = [
-    { label: "Solutions",  items: NAV_ITEMS[1].items, wide: true  },
-    { label: "Platform",   items: NAV_ITEMS[0].items, wide: false },
-    { label: "Products",   items: NAV_ITEMS[2].items, wide: false },
-    { label: "About",      items: NAV_ITEMS[4].items, wide: false },
+    { label: "Solutions",  href: "/solutions", items: NAV_ITEMS[1].items, wide: true  },
+    { label: "Platform",   href: undefined,    items: NAV_ITEMS[0].items, wide: false },
+    { label: "Products",   href: undefined,    items: NAV_ITEMS[2].items, wide: false },
+    { label: "About",      href: undefined,    items: NAV_ITEMS[4].items, wide: false },
   ];
 
   const inner = (
@@ -337,6 +353,7 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
           <NavItemButton
             key={item.label}
             label={item.label}
+            href={item.href}
             items={item.items}
             active={activeDropdown === item.label}
             onOpen={() => handleOpen(item.label)}
