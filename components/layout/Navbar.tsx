@@ -8,286 +8,702 @@ import logoImage from "@/app/7526.png";
 
 const BRAND = "#0066FF";
 
-// ─── Navigation Data ──────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// DATA TYPES
+// ─────────────────────────────────────────────────────────────────────────────
 
-type NavItem = {
+/** A leaf link inside a mega-menu group or simple dropdown. */
+interface MenuItem {
   label: string;
   href: string;
   tag?: string;
-  /** Visual section header inside the dropdown — not a link */
-  isGroup?: boolean;
-};
+  description?: string;
+  meta?: Array<{ label: string; value: string }>;
+  icon?: React.ReactNode;
+}
 
-const SOLUTIONS_ITEMS: NavItem[] = [
-  // ── HR ──────────────────────────────────────────────────────────────────
-  { label: "HR Solutions",                 href: "/solutions/hr",                     isGroup: true },
-  { label: "Talent Acquisition",           href: "/solutions/hr/talent-acquisition",  tag: "Live" },
-  { label: "Employee Onboarding",          href: "/solutions/hr" },
-  { label: "Learning & Development",       href: "/solutions/hr" },
-  // ── Sales ────────────────────────────────────────────────────────────────
-  { label: "Sales",                        href: "/solutions/sales",                  isGroup: true },
-  { label: "Lead Management",              href: "/solutions/sales/lead-management",  tag: "Live" },
-  { label: "Sales Outreach",               href: "/solutions/sales" },
-  { label: "Pipeline Management",          href: "/solutions/sales" },
-  // ── Customer Support ─────────────────────────────────────────────────────
-  { label: "Customer Support",             href: "/solutions/customer-support",       isGroup: true },
-  { label: "Support Workflow",             href: "/solutions/customer-support/support-workflow", tag: "Live" },
-  { label: "Escalation Management",        href: "/solutions/customer-support" },
-  // ── IT ───────────────────────────────────────────────────────────────────
-  { label: "IT Solutions",                 href: "/solutions/it",                     isGroup: true },
-  { label: "IT Support",                   href: "/solutions/it/it-support",          tag: "Live" },
-  { label: "Service Operations",           href: "/solutions/it/service-operations",  tag: "Live" },
-  { label: "Email Automation",             href: "/solutions/it/email-automation",    tag: "Live" },
-  // ── Custom ───────────────────────────────────────────────────────────────
-  { label: "Custom AI Solutions",          href: "/solutions/custom" },
-];
+/** A visual column group inside a mega-menu panel. */
+interface MenuGroup {
+  heading: string;
+  /** Optional href for the group heading itself */
+  headingHref?: string;
+  items: MenuItem[];
+}
 
-const NAV_ITEMS = [
-  {
-    label: "Platform",
-    items: [
-      { label: "AI Employees",         href: "/platform/ai-employees" },
-      { label: "AI Agents",            href: "/platform/ai-agents" },
-      { label: "Voice Intelligence",   href: "/platform/voice-intelligence" },
-      { label: "Workflow Automation",  href: "/platform/workflow-automation" },
-      { label: "Integrations",         href: "/platform/integrations" },
-    ] as NavItem[],
-  },
+/** Config for one top-level nav button. */
+interface NavConfig {
+  label: string;
+  /** If set the label is a clickable link AND opens the panel on hover */
+  href?: string;
+  /** null = simple label-only nav item (no panel) */
+  menu: MegaMenuConfig | SimpleMenuConfig | null;
+}
+
+/** A full-width mega panel with columns and optional hover-preview. */
+interface MegaMenuConfig {
+  kind: "mega";
+  groups: MenuGroup[];
+  /** If true, hovering a MenuItem shows a preview in the right column */
+  withPreview?: boolean;
+}
+
+/** A compact single-column dropdown. */
+interface SimpleMenuConfig {
+  kind: "simple";
+  items: MenuItem[];
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MENU DATA
+// ─────────────────────────────────────────────────────────────────────────────
+
+const NAV: NavConfig[] = [
+  // ── Solutions ──────────────────────────────────────────────────────────────
   {
     label: "Solutions",
-    items: SOLUTIONS_ITEMS,
+    href: "/solutions",
+    menu: {
+      kind: "mega",
+      withPreview: true,
+      groups: [
+        {
+          heading: "Solutions",
+          headingHref: "/solutions",
+          items: [
+            {
+              label: "HR Solutions",
+              href: "/solutions/hr",
+              description: "Automate the employee lifecycle — from hiring to offboarding.",
+              meta: [{ label: "Workflows", value: "7" }, { label: "Plugins", value: "50+" }],
+            },
+            {
+              label: "Sales",
+              href: "/solutions/sales",
+              description: "Turn prospects into revenue with intelligent sales workflows.",
+              meta: [{ label: "Workflows", value: "4" }, { label: "Plugins", value: "11+" }],
+            },
+            {
+              label: "Customer Support",
+              href: "/solutions/customer-support",
+              description: "Resolve customer issues faster with AI-powered support.",
+              meta: [{ label: "Workflows", value: "4" }, { label: "Plugins", value: "11+" }],
+            },
+            {
+              label: "IT Solutions",
+              href: "/solutions/it",
+              description: "Streamline IT operations, service requests and employee support.",
+              meta: [{ label: "Workflows", value: "3" }, { label: "Plugins", value: "27+" }],
+            },
+          ],
+        },
+        {
+          heading: "Popular Workflows",
+          items: [
+            {
+              label: "Talent Acquisition",
+              href: "/solutions/hr/talent-acquisition",
+              tag: "Live",
+              description: "Find, screen and hire candidates through an AI-powered workflow.",
+              meta: [{ label: "Plugins", value: "10" }, { label: "Integrations", value: "8" }],
+            },
+            {
+              label: "Employee Onboarding",
+              href: "/solutions/hr",
+              description: "Turn new hires into productive employees with automated onboarding.",
+              meta: [{ label: "Plugins", value: "9" }, { label: "Integrations", value: "5" }],
+            },
+            {
+              label: "Lead Management",
+              href: "/solutions/sales/lead-management",
+              tag: "Live",
+              description: "Capture, enrich and qualify leads across the sales pipeline.",
+              meta: [{ label: "Plugins", value: "11" }, { label: "Integrations", value: "3" }],
+            },
+            {
+              label: "Sales Outreach",
+              href: "/solutions/sales",
+              description: "Automate personalized outreach and follow-ups across channels.",
+              meta: [{ label: "Plugins", value: "9" }, { label: "Integrations", value: "5" }],
+            },
+            {
+              label: "Ticket Management",
+              href: "/solutions/customer-support/support-workflow",
+              tag: "Live",
+              description: "Create, classify and route support tickets automatically.",
+              meta: [{ label: "Plugins", value: "10" }, { label: "Integrations", value: "3" }],
+            },
+            {
+              label: "IT Support",
+              href: "/solutions/it/it-support",
+              tag: "Live",
+              description: "Resolve employee IT requests from intake to closure with AI guidance.",
+              meta: [{ label: "Plugins", value: "10" }, { label: "Integrations", value: "2" }],
+            },
+            {
+              label: "Service Operations",
+              href: "/solutions/it/service-operations",
+              tag: "Live",
+              description: "Manage IT service requests, approvals and provisioning.",
+              meta: [{ label: "Plugins", value: "8" }, { label: "Integrations", value: "1" }],
+            },
+            {
+              label: "Email Automation",
+              href: "/solutions/it/email-automation",
+              tag: "Live",
+              description: "Classify incoming operational emails and trigger the right workflows.",
+              meta: [{ label: "Plugins", value: "7" }, { label: "Integrations", value: "2" }],
+            },
+          ],
+        },
+        {
+          heading: "Platform Capabilities",
+          items: [
+            {
+              label: "AI Agents",
+              href: "/platform/ai-agents",
+              description: "Task-specific agents that act across your tools and workflows.",
+            },
+            {
+              label: "Workflow Automation",
+              href: "/platform/workflow-automation",
+              description: "Automate multi-step operational processes intelligently.",
+            },
+            {
+              label: "Plugins",
+              href: "/solutions",
+              description: "50+ ready-to-use capabilities for every business workflow.",
+            },
+            {
+              label: "Integrations",
+              href: "/platform/integrations",
+              description: "Connect to Salesforce, Zendesk, ServiceNow, Slack and more.",
+            },
+            {
+              label: "Voice Intelligence",
+              href: "/platform/voice-intelligence",
+              description: "Natural voice interactions for any operational workflow.",
+            },
+          ],
+        },
+      ],
+    },
   },
+
+  // ── Platform ───────────────────────────────────────────────────────────────
+  {
+    label: "Platform",
+    menu: {
+      kind: "mega",
+      withPreview: true,
+      groups: [
+        {
+          heading: "Core Platform",
+          items: [
+            {
+              label: "AI Employees",
+              href: "/platform/ai-employees",
+              description: "Autonomous AI workers deployed inside your organization.",
+              meta: [{ label: "Type", value: "Autonomous" }],
+            },
+            {
+              label: "AI Agents",
+              href: "/platform/ai-agents",
+              description: "Task-specific agents that act across your tools and data.",
+              meta: [{ label: "Type", value: "Task-specific" }],
+            },
+            {
+              label: "Voice Intelligence",
+              href: "/platform/voice-intelligence",
+              description: "Natural voice interaction for any operational workflow.",
+              meta: [{ label: "Type", value: "Voice-first" }],
+            },
+            {
+              label: "Workflow Automation",
+              href: "/platform/workflow-automation",
+              description: "Automate multi-step operational processes with AI.",
+              meta: [{ label: "Type", value: "Multi-step" }],
+            },
+            {
+              label: "Integrations",
+              href: "/platform/integrations",
+              description: "Connect to the tools and systems your teams already use.",
+              meta: [{ label: "Connectors", value: "25+" }],
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  // ── Products ───────────────────────────────────────────────────────────────
   {
     label: "Products",
-    items: [
-      { label: "Hiring Intelligence",      href: "/products/hiring-intelligence", tag: "Live" },
-      { label: "Voice AI",                 href: "/products/voice-ai" },
-      { label: "Campaigns",                href: "/products/campaigns" },
-      { label: "Candidate Intelligence",   href: "/products/candidate-intelligence" },
-      { label: "Analytics",                href: "/products/analytics" },
-    ] as NavItem[],
+    menu: {
+      kind: "simple",
+      items: [
+        { label: "Hiring Intelligence", href: "/products/hiring-intelligence", tag: "Live" },
+        { label: "Voice AI",             href: "/products/voice-ai" },
+        { label: "Campaigns",            href: "/products/campaigns" },
+        { label: "Candidate Intelligence", href: "/products/candidate-intelligence" },
+        { label: "Analytics",            href: "/products/analytics" },
+      ],
+    },
   },
+
+  // ── Resources ──────────────────────────────────────────────────────────────
   {
     label: "Resources",
-    items: [
-      { label: "Documentation",  href: "/resources/documentation" },
-      { label: "Case Studies",   href: "/resources/case-studies" },
-      { label: "Blog",           href: "/resources/blog" },
-      { label: "AI Resources",   href: "/resources/ai-resources" },
-    ] as NavItem[],
+    menu: {
+      kind: "simple",
+      items: [
+        { label: "Documentation", href: "/resources/documentation" },
+        { label: "Case Studies",  href: "/resources/case-studies" },
+        { label: "Blog",          href: "/resources/blog" },
+        { label: "AI Resources",  href: "/resources/ai-resources" },
+      ],
+    },
   },
+
+  // ── Company ────────────────────────────────────────────────────────────────
   {
     label: "Company",
-    items: [
-      { label: "About",    href: "/company/about" },
-      { label: "Security", href: "/company/security" },
-      { label: "Contact",  href: "/company/contact" },
-      { label: "Careers",  href: "/company/careers" },
-    ] as NavItem[],
+    menu: {
+      kind: "simple",
+      items: [
+        { label: "About",    href: "/company/about" },
+        { label: "Security", href: "/company/security" },
+        { label: "Contact",  href: "/company/contact" },
+        { label: "Careers",  href: "/company/careers" },
+      ],
+    },
   },
 ];
 
-// ─── Dropdown ─────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// SIMPLE DROPDOWN
+// ─────────────────────────────────────────────────────────────────────────────
 
-// Solutions dropdown is wider to accommodate the grouped structure
-function Dropdown({ items, wide }: { items: NavItem[]; wide?: boolean }) {
+function SimpleDropdown({ items }: { items: MenuItem[] }) {
   return (
-    <div
-      className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-black border border-white/12 rounded-xl overflow-hidden z-50 shadow-[0_12px_40px_rgba(0,0,0,0.45)] ${
-        wide ? "w-72" : "w-56"
-      }`}
-    >
+    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 rounded-xl border border-white/10 bg-[#0a0a0a] shadow-[0_16px_48px_rgba(0,0,0,0.6)] z-50 overflow-hidden">
       <div className="py-1.5">
-        {items.map((item, i) =>
-          item.isGroup ? (
-            // Section header — not a link
-            <div
-              key={`group-${i}`}
-              className={`px-4 pt-3 pb-1.5 ${i > 0 ? "mt-1 border-t border-white/8" : ""}`}
-            >
-              <Link
-                href={item.href}
-                className="text-[10px] font-semibold uppercase tracking-[0.18em] transition-colors hover:opacity-80"
-                style={{ color: BRAND }}
+        {items.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="flex items-center justify-between gap-2 px-4 py-2.5 text-[13px] text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+          >
+            <span>{item.label}</span>
+            {item.tag && (
+              <span
+                className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0"
+                style={{ color: BRAND, border: `1px solid ${BRAND}4D`, background: `${BRAND}1A` }}
               >
-                {item.label} →
-              </Link>
-            </div>
-          ) : (
-            <Link
-              key={item.href + i}
-              href={item.href}
-              className="flex items-center justify-between gap-2 px-4 py-2 text-[13px] text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
-            >
-              <span>{item.label}</span>
-              {item.tag && (
-                <span
-                  className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded flex-shrink-0"
-                  style={{ color: BRAND, border: `1px solid ${BRAND}4D`, background: `${BRAND}1A` }}
-                >
-                  {item.tag}
-                </span>
-              )}
-            </Link>
-          )
-        )}
+                {item.tag}
+              </span>
+            )}
+          </Link>
+        ))}
       </div>
     </div>
   );
 }
 
-// ─── NavItem ──────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// MEGA MENU
+// ─────────────────────────────────────────────────────────────────────────────
 
-function NavItemButton({
-  label,
-  href,
-  items,
-  active,
-  onOpen,
+function MegaMenuPanel({
+  config,
   onClose,
-  wide,
 }: {
-  label: string;
-  href?: string;
-  items: NavItem[];
-  active: boolean;
-  onOpen: () => void;
+  config: MegaMenuConfig;
   onClose: () => void;
-  wide?: boolean;
 }) {
+  // Collect every previewable item (those with description)
+  const allPreviewItems = config.groups
+    .flatMap((g) => g.items)
+    .filter((i) => i.description);
+
+  const [hoveredItem, setHoveredItem] = useState<MenuItem | null>(
+    allPreviewItems[0] ?? null
+  );
+
+  const colCount = config.withPreview
+    ? config.groups.length + 1  // extra preview column
+    : config.groups.length;
+
+  // Grid template: equal columns for groups + fixed preview column
+  const gridStyle: React.CSSProperties = config.withPreview
+    ? {
+        gridTemplateColumns: `repeat(${config.groups.length}, 1fr) 220px`,
+      }
+    : { gridTemplateColumns: `repeat(${config.groups.length}, 1fr)` };
+
   return (
-    <div className="relative" onMouseEnter={onOpen} onMouseLeave={onClose}>
-      {href ? (
+    <div
+      className="absolute top-full left-1/2 mt-3 rounded-2xl border border-white/10 bg-[#0a0a0a] shadow-[0_20px_60px_rgba(0,0,0,0.7)] z-50 overflow-hidden"
+      // Centre the panel relative to the viewport width, not the trigger
+      style={{
+        transform: "translateX(-50%)",
+        width: "min(900px, calc(100vw - 48px))",
+      }}
+      // Keep open while mouse is inside the panel
+      onMouseLeave={onClose}
+    >
+      <div className="grid" style={gridStyle}>
+        {/* ── Groups ─────────────────────────────────────────────────── */}
+        {config.groups.map((group, gi) => (
+          <div
+            key={group.heading}
+            className={`py-5 px-5 ${gi > 0 ? "border-l border-white/[0.06]" : ""}`}
+          >
+            {/* Group heading */}
+            {group.headingHref ? (
+              <Link
+                href={group.headingHref}
+                className="block mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] hover:opacity-75 transition-opacity"
+                style={{ color: BRAND }}
+                onClick={onClose}
+              >
+                {group.heading}
+              </Link>
+            ) : (
+              <p
+                className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em]"
+                style={{ color: "rgba(255,255,255,0.28)" }}
+              >
+                {group.heading}
+              </p>
+            )}
+
+            {/* Items */}
+            <ul className="space-y-0.5">
+              {group.items.map((item) => {
+                const isActive = hoveredItem?.label === item.label;
+                return (
+                  <li key={item.href + item.label}>
+                    <Link
+                      href={item.href}
+                      onMouseEnter={() => item.description ? setHoveredItem(item) : undefined}
+                      onClick={onClose}
+                      className={`group flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-[13px] transition-all duration-100 ${
+                        isActive
+                          ? "bg-white/[0.07] text-white"
+                          : "text-slate-400 hover:bg-white/[0.04] hover:text-white"
+                      }`}
+                    >
+                      <span className="leading-snug">{item.label}</span>
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        {item.tag && (
+                          <span
+                            className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded"
+                            style={{ color: BRAND, border: `1px solid ${BRAND}4D`, background: `${BRAND}1A` }}
+                          >
+                            {item.tag}
+                          </span>
+                        )}
+                        <svg
+                          className={`w-3 h-3 transition-all duration-100 ${
+                            isActive ? "opacity-60 translate-x-0" : "opacity-0 -translate-x-1 group-hover:opacity-40 group-hover:translate-x-0"
+                          }`}
+                          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+
+        {/* ── Preview column ──────────────────────────────────────────── */}
+        {config.withPreview && (
+          <div className="border-l border-white/[0.06] bg-white/[0.02] py-5 px-5 flex flex-col justify-between">
+            {hoveredItem ? (
+              <div className="flex flex-col gap-3 h-full">
+                {/* Title */}
+                <div>
+                  <p className="text-[13px] font-semibold text-white leading-snug mb-2">
+                    {hoveredItem.label}
+                  </p>
+                  <p className="text-[12px] leading-relaxed" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {hoveredItem.description}
+                  </p>
+                </div>
+
+                {/* Meta pills */}
+                {hoveredItem.meta && hoveredItem.meta.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {hoveredItem.meta.map((m) => (
+                      <div
+                        key={m.label}
+                        className="rounded-lg px-2.5 py-1.5 flex flex-col"
+                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
+                      >
+                        <span className="text-[9px] uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.30)" }}>
+                          {m.label}
+                        </span>
+                        <span className="text-[15px] font-semibold text-white leading-tight">{m.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* CTA */}
+                <div className="mt-auto pt-3">
+                  <Link
+                    href={hoveredItem.href}
+                    onClick={onClose}
+                    className="inline-flex items-center gap-1.5 text-[11px] font-semibold transition-colors hover:opacity-80"
+                    style={{ color: BRAND }}
+                  >
+                    View workflow
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <p className="text-[12px]" style={{ color: "rgba(255,255,255,0.25)" }}>
+                Hover an item to preview
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Bottom bar */}
+      <div
+        className="flex items-center justify-between px-5 py-3 border-t"
+        style={{ borderColor: "rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}
+      >
+        <p className="text-[11px]" style={{ color: "rgba(255,255,255,0.28)" }}>
+          AI agents · Workflows · Plugins · Integrations
+        </p>
         <Link
-          href={href}
-          className={`flex items-center gap-1 text-[13px] font-medium px-3 py-2 transition-colors ${
-            active ? "text-white" : "text-slate-400 hover:text-white"
-          }`}
+          href="/solutions"
+          onClick={onClose}
+          className="text-[11px] font-semibold transition-colors hover:opacity-75"
+          style={{ color: BRAND }}
         >
-          {label}
-          <svg
-            className={`w-3 h-3 transition-transform ${active ? "rotate-180" : ""}`}
-            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
+          See all solutions →
         </Link>
-      ) : (
-        <button
-          className={`flex items-center gap-1 text-[13px] font-medium px-3 py-2 transition-colors ${
-            active ? "text-white" : "text-slate-400 hover:text-white"
-          }`}
-          aria-haspopup="true"
-          aria-expanded={active}
-        >
-          {label}
-          <svg
-            className={`w-3 h-3 transition-transform ${active ? "rotate-180" : ""}`}
-            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-      )}
-      {active && <Dropdown items={items} wide={wide} />}
+      </div>
     </div>
   );
 }
 
-// ─── Mobile Menu ──────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// DESKTOP NAV BUTTON + PANEL
+// ─────────────────────────────────────────────────────────────────────────────
+
+function NavButton({
+  config,
+  active,
+  onOpen,
+  onClose,
+}: {
+  config: NavConfig;
+  active: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}) {
+  const hasMenu = config.menu !== null;
+  const btnCls = `flex items-center gap-0.5 text-[13px] font-medium px-3 py-2 transition-colors rounded-lg ${
+    active ? "text-white bg-white/[0.05]" : "text-slate-400 hover:text-white hover:bg-white/[0.03]"
+  }`;
+
+  return (
+    // onMouseLeave on the wrapper — mega panel also calls onClose on its own leave
+    <div
+      className="relative"
+      onMouseEnter={onOpen}
+      onMouseLeave={() => {
+        // Only close if not mega (mega self-manages leave)
+        if (config.menu?.kind !== "mega") onClose();
+      }}
+    >
+      {/* Trigger button / link */}
+      {config.href ? (
+        <Link href={config.href} className={btnCls}>
+          {config.label}
+          {hasMenu && (
+            <svg className={`w-3 h-3 ml-0.5 transition-transform ${active ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          )}
+        </Link>
+      ) : (
+        <button className={btnCls} aria-haspopup={hasMenu} aria-expanded={active}>
+          {config.label}
+          {hasMenu && (
+            <svg className={`w-3 h-3 ml-0.5 transition-transform ${active ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          )}
+        </button>
+      )}
+
+      {/* Panel */}
+      {active && config.menu && (
+        config.menu.kind === "mega" ? (
+          <MegaMenuPanel config={config.menu} onClose={onClose} />
+        ) : (
+          <SimpleDropdown items={config.menu.items} />
+        )
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MOBILE MENU  (accordion)
+// ─────────────────────────────────────────────────────────────────────────────
 
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (!open) setExpanded(null);
-  }, [open]);
-
-  useEffect(() => {
-    onClose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
+  // Close on route change
+  useEffect(() => { onClose(); /* eslint-disable-next-line */ }, [pathname]);
+  // Reset expansion when menu closes
+  useEffect(() => { if (!open) setExpanded(null); }, [open]);
 
   if (!open) return null;
 
+  /** Flatten all items from a menu config */
+  function flatItems(menu: MegaMenuConfig | SimpleMenuConfig): Array<{ item: MenuItem; groupLabel: string }> {
+    if (menu.kind === "simple") return menu.items.map((item) => ({ item, groupLabel: "" }));
+    return menu.groups.flatMap((g) => g.items.map((item) => ({ item, groupLabel: g.heading })));
+  }
+
+  /** Deduplicate items by href */
+  function dedup(items: Array<{ item: MenuItem; groupLabel: string }>) {
+    const seen = new Set<string>();
+    return items.filter(({ item }) => {
+      if (seen.has(item.href + item.label)) return false;
+      seen.add(item.href + item.label);
+      return true;
+    });
+  }
+
   return (
-    <div className="fixed inset-0 z-40 flex flex-col bg-black/95 backdrop-blur-sm">
-      <div className="overflow-y-auto p-6 pt-20">
-        <Link href="/" className="block px-2 py-3 text-sm font-medium text-white">
+    <div className="fixed inset-0 z-40 flex flex-col bg-black/97 backdrop-blur-sm">
+      {/* Close button */}
+      <div className="flex items-center justify-between px-6 pt-5 pb-2">
+        <Link href="/" onClick={onClose}>
+          <Image src={logoImage} alt="SoloBuild" width={100} height={32} className="object-contain" />
+        </Link>
+        <button onClick={onClose} className="p-2 text-white/60 hover:text-white">
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div className="overflow-y-auto flex-1 px-4 py-4">
+        <Link href="/" onClick={onClose} className="flex items-center gap-2 px-3 py-3 rounded-xl text-sm font-medium text-white hover:bg-white/5 transition-colors mb-1">
           Home
         </Link>
 
-        {NAV_ITEMS.map((section) => (
-          <div key={section.label} className="mb-2">
-            <button
-              className="w-full flex items-center justify-between px-2 py-3 text-sm font-medium text-white hover:text-[#0066FF] transition-colors"
-              onClick={() => setExpanded(expanded === section.label ? null : section.label)}
-            >
-              {section.label}
-              <svg
-                className={`w-4 h-4 transition-transform ${expanded === section.label ? "rotate-180" : ""}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
+        {NAV.map((nav) => {
+          const isOpen = expanded === nav.label;
+          const rows = nav.menu ? dedup(flatItems(nav.menu)) : [];
 
-            {expanded === section.label && (
-              <div className="ml-4 space-y-0.5">
-                {section.items.map((item, i) =>
-                  item.isGroup ? (
-                    // Group header in mobile
-                    <div
-                      key={`mob-group-${i}`}
-                      className={`px-2 pt-3 pb-1 ${i > 0 ? "mt-1" : ""}`}
-                    >
-                      <Link
-                        href={item.href}
-                        className="text-[10px] font-semibold uppercase tracking-[0.18em]"
-                        style={{ color: BRAND }}
-                      >
-                        {item.label} →
-                      </Link>
-                    </div>
-                  ) : (
+          return (
+            <div key={nav.label} className="mb-1">
+              <button
+                className="w-full flex items-center justify-between px-3 py-3 rounded-xl text-sm font-medium text-white hover:bg-white/5 transition-colors"
+                onClick={() => setExpanded(isOpen ? null : nav.label)}
+              >
+                <span>{nav.label}</span>
+                <svg
+                  className={`w-4 h-4 text-white/40 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isOpen && (
+                <div className="ml-3 mt-0.5 mb-2 rounded-xl border border-white/8 bg-white/[0.02] overflow-hidden">
+                  {/* Section heading link if exists */}
+                  {nav.href && (
                     <Link
-                      key={item.href + i}
-                      href={item.href}
-                      className="flex items-center justify-between px-2 py-2 text-xs text-slate-400 hover:text-white transition-colors"
+                      href={nav.href}
+                      onClick={onClose}
+                      className="flex items-center gap-2 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] border-b border-white/8 transition-colors hover:bg-white/5"
+                      style={{ color: BRAND }}
                     >
-                      <span>{item.label}</span>
-                      {item.tag && (
-                        <span
-                          className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded"
-                          style={{ color: BRAND, border: `1px solid ${BRAND}4D`, background: `${BRAND}1A` }}
-                        >
-                          {item.tag}
-                        </span>
-                      )}
+                      All {nav.label} →
                     </Link>
-                  )
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+                  )}
+
+                  {/* Grouped items */}
+                  {nav.menu?.kind === "mega"
+                    ? nav.menu.groups.map((group) => (
+                        <div key={group.heading}>
+                          <p
+                            className="px-4 pt-3 pb-1 text-[9px] font-semibold uppercase tracking-[0.18em]"
+                            style={{ color: "rgba(255,255,255,0.28)" }}
+                          >
+                            {group.heading}
+                          </p>
+                          {group.items.map((item) => (
+                            <Link
+                              key={item.href + item.label}
+                              href={item.href}
+                              onClick={onClose}
+                              className="flex items-center justify-between px-4 py-2.5 text-[13px] text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                            >
+                              <span>{item.label}</span>
+                              {item.tag && (
+                                <span
+                                  className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded"
+                                  style={{ color: BRAND, border: `1px solid ${BRAND}4D`, background: `${BRAND}1A` }}
+                                >
+                                  {item.tag}
+                                </span>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      ))
+                    : rows.map(({ item }) => (
+                        <Link
+                          key={item.href + item.label}
+                          href={item.href}
+                          onClick={onClose}
+                          className="flex items-center justify-between px-4 py-2.5 text-[13px] text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                        >
+                          <span>{item.label}</span>
+                          {item.tag && (
+                            <span
+                              className="text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded"
+                              style={{ color: BRAND, border: `1px solid ${BRAND}4D`, background: `${BRAND}1A` }}
+                            >
+                              {item.tag}
+                            </span>
+                          )}
+                        </Link>
+                      ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      <div className="border-t border-white/10 p-6 flex flex-col gap-3">
-        <Link
-          href="/signin"
-          className="w-full px-4 py-3 text-sm font-medium text-white border border-white/20 hover:border-white/40 text-center transition-colors rounded-xl"
-        >
+      <div className="border-t border-white/10 px-4 py-4 flex flex-col gap-3">
+        <Link href="/signin" onClick={onClose} className="w-full px-4 py-3 text-sm font-medium text-white border border-white/15 hover:border-white/30 text-center transition-colors rounded-xl">
           Sign In
         </Link>
-        <Link
-          href="/demo"
-          className="w-full px-4 py-3 text-sm font-medium text-white bg-[#0066FF] hover:bg-[#0052cc] text-center transition-colors rounded-xl"
-        >
+        <Link href="/demo" onClick={onClose} className="w-full px-4 py-3 text-sm font-medium text-white bg-[#0066FF] hover:bg-[#0052cc] text-center transition-colors rounded-xl">
           Get Started
         </Link>
       </div>
@@ -295,7 +711,9 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   );
 }
 
-// ─── Logo ─────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// LOGO
+// ─────────────────────────────────────────────────────────────────────────────
 
 function Logo() {
   return (
@@ -305,65 +723,87 @@ function Logo() {
   );
 }
 
-// ─── Main Navbar ──────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// MAIN NAVBAR
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function Navbar({ framed = false }: { framed?: boolean }) {
   const pathname = usePathname();
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const closeTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isHome = pathname === "/";
 
+  const [activeMenu, setActiveMenu]   = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen]   = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  // ── Escape key ──────────────────────────────────────────────────────────────
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") { setActiveMenu(null); setMobileOpen(false); }
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  // ── Click outside ──────────────────────────────────────────────────────────
+  useEffect(() => {
+    function onPointer(e: PointerEvent) {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setActiveMenu(null);
+      }
+    }
+    document.addEventListener("pointerdown", onPointer);
+    return () => document.removeEventListener("pointerdown", onPointer);
+  }, []);
+
+  // Close menus on route change
+  useEffect(() => {
+    setActiveMenu(null);
+    setMobileOpen(false);
+  }, [pathname]);
+
   const handleOpen = useCallback((label: string) => {
-    if (closeTimeout.current) clearTimeout(closeTimeout.current);
-    setActiveDropdown(label);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setActiveMenu(label);
   }, []);
 
   const handleClose = useCallback(() => {
-    closeTimeout.current = setTimeout(() => setActiveDropdown(null), 120);
+    closeTimer.current = setTimeout(() => setActiveMenu(null), 80);
   }, []);
 
-  // Desktop nav items — ordered: Solutions | Platform | Products | About
-  const desktopNav = [
-    { label: "Solutions",  href: "/solutions", items: NAV_ITEMS[1].items, wide: true  },
-    { label: "Platform",   href: undefined,    items: NAV_ITEMS[0].items, wide: false },
-    { label: "Products",   href: undefined,    items: NAV_ITEMS[2].items, wide: false },
-    { label: "About",      href: undefined,    items: NAV_ITEMS[4].items, wide: false },
-  ];
-
   const inner = (
-    <div className={`flex items-center justify-between h-[58px] ${framed ? "px-5 sm:px-6" : "px-6"}`}>
+    <div
+      ref={navRef}
+      className={`flex items-center justify-between h-[58px] ${framed ? "px-5 sm:px-6" : "px-6"}`}
+    >
       <Logo />
 
-      {/* Desktop navigation */}
-      <div className="hidden lg:flex items-center">
+      {/* ── Desktop nav ─────────────────────────────────────────────── */}
+      <nav className="hidden lg:flex items-center" aria-label="Main navigation">
         <Link
           href="/"
-          className={`relative text-[13px] font-medium px-3 py-2 transition-colors ${
-            isHome ? "text-white" : "text-slate-400 hover:text-white"
+          className={`relative text-[13px] font-medium px-3 py-2 rounded-lg transition-colors ${
+            isHome ? "text-white bg-white/[0.05]" : "text-slate-400 hover:text-white hover:bg-white/[0.03]"
           }`}
         >
           Home
           {isHome && (
-            <span className="absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-[#0066FF]" />
+            <span className="absolute left-3 right-3 -bottom-px h-[2px] rounded-full bg-[#0066FF]" />
           )}
         </Link>
 
-        {desktopNav.map((item) => (
-          <NavItemButton
-            key={item.label}
-            label={item.label}
-            href={item.href}
-            items={item.items}
-            active={activeDropdown === item.label}
-            onOpen={() => handleOpen(item.label)}
+        {NAV.map((nav) => (
+          <NavButton
+            key={nav.label}
+            config={nav}
+            active={activeMenu === nav.label}
+            onOpen={() => handleOpen(nav.label)}
             onClose={handleClose}
-            wide={item.wide}
           />
         ))}
-      </div>
+      </nav>
 
-      {/* Desktop right actions */}
+      {/* ── Desktop right ────────────────────────────────────────────── */}
       <div className="hidden lg:flex items-center gap-3">
         <Link
           href="/demo"
@@ -376,11 +816,11 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
         </Link>
       </div>
 
-      {/* Mobile hamburger */}
+      {/* ── Mobile hamburger ─────────────────────────────────────────── */}
       <button
-        className="lg:hidden p-2 text-white relative z-50"
+        className="lg:hidden p-2 text-white/80 hover:text-white relative z-50 transition-colors"
         onClick={() => setMobileOpen(!mobileOpen)}
-        aria-label="Toggle menu"
+        aria-label={mobileOpen ? "Close menu" : "Open menu"}
       >
         {mobileOpen ? (
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -410,6 +850,7 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
               ? "rounded-2xl border border-white/12 bg-black"
               : "max-w-[1600px] mx-auto"
           }
+          aria-label="Site navigation"
         >
           {inner}
         </nav>
