@@ -126,9 +126,8 @@ interface WorkflowDef {
   name: string;
   description: string;
   pluginCount: number;
-  integrationIds: string[];   // IDs from INTEGRATIONS map
+  integrationIds: string[];
   route: string;
-  live?: boolean;
   icon: React.ReactNode;
 }
 
@@ -164,23 +163,26 @@ function CogIcon()       { return <svg className={WF_ICON_CLS} fill="none" viewB
 // ─── Solutions data ───────────────────────────────────────────────────────────
 
 const SOLUTIONS: SolutionSection[] = [
+  // ── HR ─────────────────────────────────────────────────────────────────────
   {
     id: "hr",
     name: "HR Solutions",
-    tagline: "Attract, develop and retain great people with AI-powered workflows.",
+    tagline: "Attract, develop and support people with AI-powered workflows.",
     description: "Automate the employee lifecycle with AI agents, workflows and enterprise integrations.",
     exploreHref: "/solutions/hr",
     workflows: [
       {
-        id: "talent-acquisition", name: "Talent Acquisition",
-        description: "Find, screen and hire candidates with AI-powered recruiting workflows.",
-        pluginCount: 10, live: true,
+        id: "talent-acquisition",
+        name: "Talent Acquisition",
+        description: "Find, screen and hire candidates through an AI-powered recruiting workflow.",
+        pluginCount: 10,
         integrationIds: ["greenhouse", "linkedin", "google", "workday", "lever"],
         route: "/solutions/hr/talent-acquisition",
         icon: <PeopleIcon />,
       },
       {
-        id: "employee-onboarding", name: "Employee Onboarding",
+        id: "employee-onboarding",
+        name: "Employee Onboarding",
         description: "Turn new hires into productive employees with automated onboarding workflows.",
         pluginCount: 9,
         integrationIds: ["okta", "microsoft", "slack", "google", "workday"],
@@ -188,7 +190,8 @@ const SOLUTIONS: SolutionSection[] = [
         icon: <SparkIcon />,
       },
       {
-        id: "learning-development", name: "Learning & Development",
+        id: "learning-development",
+        name: "Learning & Development",
         description: "Personalize learning, training and skill development across the organization.",
         pluginCount: 8,
         integrationIds: ["google", "microsoft", "slack", "notion"],
@@ -196,7 +199,8 @@ const SOLUTIONS: SolutionSection[] = [
         icon: <BookIcon />,
       },
       {
-        id: "performance-reviews", name: "Performance & Reviews",
+        id: "performance-reviews",
+        name: "Performance & Reviews",
         description: "Automate feedback, review cycles and performance workflows for your teams.",
         pluginCount: 7,
         integrationIds: ["workday", "slack", "teams", "google"],
@@ -204,7 +208,8 @@ const SOLUTIONS: SolutionSection[] = [
         icon: <ChartIcon />,
       },
       {
-        id: "payroll-benefits", name: "Payroll & Benefits",
+        id: "payroll-benefits",
+        name: "Payroll & Benefits",
         description: "Streamline payroll, benefits and employee compensation workflows.",
         pluginCount: 10,
         integrationIds: ["workday", "microsoft", "okta", "google", "slack"],
@@ -212,7 +217,8 @@ const SOLUTIONS: SolutionSection[] = [
         icon: <WalletIcon />,
       },
       {
-        id: "employee-support", name: "Employee Support",
+        id: "employee-support",
+        name: "Employee Support",
         description: "Help employees get answers and complete HR requests faster with AI assistance.",
         pluginCount: 11,
         integrationIds: ["slack", "teams", "confluence", "servicenow"],
@@ -220,8 +226,9 @@ const SOLUTIONS: SolutionSection[] = [
         icon: <SupportIcon />,
       },
       {
-        id: "offboarding", name: "Offboarding",
-        description: "Coordinate employee exits, access changes, documentation and team handovers.",
+        id: "offboarding",
+        name: "Offboarding",
+        description: "Coordinate employee exits, access revocation, documentation and team handovers.",
         pluginCount: 6,
         integrationIds: ["okta", "workday", "slack", "teams"],
         route: "/solutions/hr",
@@ -229,31 +236,54 @@ const SOLUTIONS: SolutionSection[] = [
       },
     ],
   },
+
+  // ── Sales ───────────────────────────────────────────────────────────────────
   {
     id: "sales",
     name: "Sales",
-    tagline: "Turn prospects into revenue with intelligent sales workflows.",
-    description: "Turn prospects into revenue with intelligent workflows across the sales lifecycle.",
+    tagline: "Automate the sales lifecycle from lead to opportunity.",
+    description: "Turn prospects into revenue with intelligent workflows across the full sales cycle.",
     exploreHref: "/solutions/sales",
     workflows: [
       {
-        id: "lead-management", name: "Lead Management",
+        id: "lead-management",
+        name: "Lead Management",
         description: "Capture and organize leads from multiple sources into the sales pipeline.",
-        pluginCount: 11, live: true,
+        pluginCount: 11,
         integrationIds: ["salesforce", "hubspot", "linkedin", "google"],
         route: "/solutions/sales/lead-management",
         icon: <FunnelIcon />,
       },
       {
-        id: "sales-outreach", name: "Sales Outreach",
-        description: "Automate personalized outreach and follow-ups across channels at scale.",
+        id: "lead-qualification",
+        name: "Lead Qualification",
+        description: "Evaluate leads against sales criteria and identify prospects ready for engagement.",
+        pluginCount: 8,
+        integrationIds: ["salesforce", "hubspot", "google", "linkedin"],
+        route: "/solutions/sales/lead-management",
+        icon: <AgentIcon />,
+      },
+      {
+        id: "sales-outreach",
+        name: "Sales Outreach",
+        description: "Automate personalized outreach and follow-up sequences across channels.",
         pluginCount: 9,
         integrationIds: ["gmail", "outlook", "salesforce", "hubspot", "linkedin"],
         route: "/solutions/sales",
         icon: <MailIcon />,
       },
       {
-        id: "opportunity-management", name: "Opportunity Management",
+        id: "meeting-scheduling",
+        name: "Meeting & Scheduling",
+        description: "Coordinate calendars and schedule meetings between sales reps and prospects.",
+        pluginCount: 6,
+        integrationIds: ["gcal", "outlook", "salesforce", "teams"],
+        route: "/solutions/sales",
+        icon: <TicketIcon />,
+      },
+      {
+        id: "opportunity-management",
+        name: "Opportunity Management",
         description: "Track opportunities, update pipeline information and coordinate deal workflows.",
         pluginCount: 8,
         integrationIds: ["salesforce", "hubspot", "microsoft", "google"],
@@ -261,7 +291,8 @@ const SOLUTIONS: SolutionSection[] = [
         icon: <PipeIcon />,
       },
       {
-        id: "sales-analytics", name: "Sales Analytics",
+        id: "sales-analytics",
+        name: "Sales Analytics",
         description: "Turn sales activity and pipeline data into actionable business insights.",
         pluginCount: 6,
         integrationIds: ["salesforce", "hubspot", "google", "microsoft"],
@@ -270,23 +301,27 @@ const SOLUTIONS: SolutionSection[] = [
       },
     ],
   },
+
+  // ── Customer Support ────────────────────────────────────────────────────────
   {
     id: "customer-support",
     name: "Customer Support",
-    tagline: "Delight customers with faster, smarter support.",
-    description: "Resolve customer issues faster with AI-powered support workflows and agent assistance.",
+    tagline: "Resolve customer requests faster with AI-powered support workflows.",
+    description: "Classify, route and resolve customer issues with AI agents and automated workflows.",
     exploreHref: "/solutions/customer-support",
     workflows: [
       {
-        id: "ticket-management", name: "Ticket Management",
+        id: "ticket-management",
+        name: "Ticket Management",
         description: "Automatically create, classify and route support tickets from every channel.",
-        pluginCount: 10, live: true,
+        pluginCount: 10,
         integrationIds: ["zendesk", "slack", "teams", "salesforce"],
         route: "/solutions/customer-support/support-workflow",
         icon: <TicketIcon />,
       },
       {
-        id: "agent-assist", name: "Agent Assist",
+        id: "agent-assist",
+        name: "Agent Assist",
         description: "Give support agents relevant information and recommended next actions in real time.",
         pluginCount: 9,
         integrationIds: ["zendesk", "confluence", "notion", "slack", "google"],
@@ -294,7 +329,8 @@ const SOLUTIONS: SolutionSection[] = [
         icon: <AgentIcon />,
       },
       {
-        id: "knowledge-resolution", name: "Knowledge & Resolution",
+        id: "knowledge-resolution",
+        name: "Knowledge & Resolution",
         description: "Find trusted answers and guide customers toward faster issue resolution.",
         pluginCount: 8,
         integrationIds: ["zendesk", "salesforce", "google", "confluence"],
@@ -302,8 +338,27 @@ const SOLUTIONS: SolutionSection[] = [
         icon: <KnowledgeIcon />,
       },
       {
-        id: "support-analytics", name: "Support Analytics",
-        description: "Analyze support activity, resolution trends and customer-service performance.",
+        id: "escalation",
+        name: "Escalation",
+        description: "Escalate unresolved or high-priority issues to the right team before SLAs breach.",
+        pluginCount: 7,
+        integrationIds: ["zendesk", "slack", "teams", "servicenow"],
+        route: "/solutions/customer-support/support-workflow",
+        icon: <WrenchIcon />,
+      },
+      {
+        id: "customer-communication",
+        name: "Customer Communication",
+        description: "Send automated status updates, confirmations and resolution notifications to customers.",
+        pluginCount: 6,
+        integrationIds: ["zendesk", "gmail", "outlook", "slack"],
+        route: "/solutions/customer-support",
+        icon: <MailIcon />,
+      },
+      {
+        id: "support-analytics",
+        name: "Support Analytics",
+        description: "Analyze ticket volumes, resolution times and support performance trends.",
         pluginCount: 7,
         integrationIds: ["zendesk", "salesforce", "google", "teams"],
         route: "/solutions/customer-support",
@@ -311,33 +366,38 @@ const SOLUTIONS: SolutionSection[] = [
       },
     ],
   },
+
+  // ── IT ──────────────────────────────────────────────────────────────────────
   {
     id: "it",
     name: "IT Solutions",
-    tagline: "Streamline IT operations and empower employees.",
-    description: "Streamline IT operations, service requests and employee support with AI agents.",
+    tagline: "Streamline employee support and IT service operations.",
+    description: "Resolve IT requests, manage services and automate operational workflows with AI agents.",
     exploreHref: "/solutions/it",
     workflows: [
       {
-        id: "it-support", name: "IT Support",
-        description: "Resolve employee IT requests, incidents and common technical issues faster.",
-        pluginCount: 10, live: true,
+        id: "it-support",
+        name: "IT Support",
+        description: "Resolve employee IT requests, incidents and technical issues from intake to closure.",
+        pluginCount: 10,
         integrationIds: ["servicenow", "jira", "okta", "teams"],
         route: "/solutions/it/it-support",
         icon: <WrenchIcon />,
       },
       {
-        id: "service-operations", name: "Service Operations",
-        description: "Manage IT services, requests, approvals, assets and operational workflows.",
-        pluginCount: 8, live: true,
+        id: "service-operations",
+        name: "Service Operations",
+        description: "Manage IT service requests, approvals, provisioning and operational workflows.",
+        pluginCount: 8,
         integrationIds: ["servicenow", "jira", "microsoft", "slack", "teams"],
         route: "/solutions/it/service-operations",
         icon: <CogIcon />,
       },
       {
-        id: "email-automation", name: "Email Automation",
+        id: "email-automation",
+        name: "Email Automation",
         description: "Classify incoming operational emails and automatically trigger the appropriate workflows.",
-        pluginCount: 7, live: true,
+        pluginCount: 7,
         integrationIds: ["gmail", "outlook", "servicenow", "teams"],
         route: "/solutions/it/email-automation",
         icon: <MailIcon />,
@@ -381,22 +441,12 @@ function WorkflowCard({ wf }: { wf: WorkflowDef }) {
       href={wf.route}
       className="group relative flex flex-col rounded-xl border border-white/10 bg-black hover:border-white/20 hover:-translate-y-0.5 transition-all duration-150 p-5 overflow-hidden"
     >
-      {/* Live badge */}
-      {wf.live && (
-        <span
-          className="absolute top-4 right-4 text-[9px] font-semibold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded"
-          style={{ color: BLUE, border: `1px solid ${BLUE}40`, background: `${BLUE}14` }}
-        >
-          Live
-        </span>
-      )}
-
       {/* Icon + name */}
       <div className="flex items-center gap-3 mb-3">
         <div className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center flex-shrink-0 bg-white/[0.03]">
           {wf.icon}
         </div>
-        <div className="flex items-center gap-2 min-w-0 flex-1 mr-8">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
           <h3 className="text-[14px] font-semibold text-white leading-snug truncate">{wf.name}</h3>
         </div>
         <svg
@@ -418,9 +468,7 @@ function WorkflowCard({ wf }: { wf: WorkflowDef }) {
       </div>
 
       {/* Footer */}
-      <div
-        className="flex items-center justify-between pt-3.5 border-t border-white/8"
-      >
+      <div className="flex items-center justify-between pt-3.5 border-t border-white/[0.08]">
         <span className="text-[10px] font-medium text-slate-600 uppercase tracking-[0.14em]">
           {wf.pluginCount} plugins
         </span>
@@ -464,8 +512,7 @@ function SolutionBlock({ solution }: { solution: SolutionSection }) {
           {solution.workflows.map((wf) => (
             <WorkflowCard key={wf.id} wf={wf} />
           ))}
-        </div>
-      </div>
+        </div>      </div>
     </div>
   );
 }
