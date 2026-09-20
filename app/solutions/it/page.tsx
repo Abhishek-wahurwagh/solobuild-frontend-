@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function ITPage() {
-  return <SolutionOverviewPage solution={IT_SOLUTION} />;
+  return <SolutionOverviewPage solution={IT_SOLUTION} heroImage="/images/editorial-man.png" />;
 }

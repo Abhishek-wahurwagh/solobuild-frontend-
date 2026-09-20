@@ -4,12 +4,12 @@ import { useState } from "react";
 import FormField from "@/components/ui/FormField";
 
 const INTEREST_OPTIONS = [
-  { value: "hiring", label: "AI for Hiring" },
-  { value: "sales", label: "AI for Sales" },
-  { value: "customer-support", label: "AI for Customer Support" },
-  { value: "operations", label: "AI for Operations" },
-  { value: "custom", label: "Custom AI Solution" },
-  { value: "general", label: "General overview" },
+  { value: "hr-solution", label: "HR Solution" },
+  { value: "sales-solution", label: "Sales Solution" },
+  { value: "customer-support-solution", label: "Customer Support Solution" },
+  { value: "operations-solution", label: "Operations Solution" },
+  { value: "custom-ai-solution", label: "Custom AI Solution" },
+  { value: "other", label: "Other" },
 ];
 
 const TEAM_SIZE_OPTIONS = [
@@ -27,6 +27,7 @@ type Form = {
   jobTitle: string;
   phone: string;
   interest: string;
+  requirements: string;
   teamSize: string;
   message: string;
 };
@@ -35,7 +36,7 @@ type Errors = Partial<Record<keyof Form, string>>;
 
 const EMPTY: Form = {
   fullName: "", workEmail: "", company: "", jobTitle: "",
-  phone: "", interest: "", teamSize: "", message: "",
+  phone: "", interest: "", requirements: "", teamSize: "", message: "",
 };
 
 function validate(f: Form): Errors {
@@ -105,6 +106,9 @@ export default function DemoForm() {
       <FormField as="select" label="Area of Interest" id="interest" required placeholder="What are you interested in?"
         value={form.interest} onChange={(e) => handle("interest", e.target.value)}
         options={INTEREST_OPTIONS} error={errors.interest} />
+      <FormField as="textarea" label="Tell us more about your requirements" id="requirements" rows={3}
+        placeholder="Describe what you would like to automate, improve, or build…"
+        value={form.requirements} onChange={(e) => handle("requirements", e.target.value)} />
       <FormField as="textarea" label="Anything you'd like us to know?" id="message" rows={3}
         placeholder="Optional — tell us about your current hiring process, challenges, or goals."
         value={form.message} onChange={(e) => handle("message", e.target.value)} />

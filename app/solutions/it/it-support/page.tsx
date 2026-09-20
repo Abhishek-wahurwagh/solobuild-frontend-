@@ -42,6 +42,8 @@ export default function ITSupportPage() {
       plugins={ALL_IT_SUPPORT_PLUGINS}
       stages={IT_SUPPORT_STAGES}
       categories={[...CATEGORIES]}
+      heroImage="/images/hero-woman.png"
+      heroBadge="AI IT support system active"
     />
   );
 }

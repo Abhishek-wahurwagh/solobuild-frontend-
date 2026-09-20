@@ -3,8 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
-import logoImage from "@/app/7526.png";
+import BrandLogo from "./BrandLogo";
 
 const BRAND = "#0066FF";
 
@@ -45,6 +44,9 @@ interface MegaMenuConfig {
   groups: MenuGroup[];
   /** If true, hovering a MenuItem shows a preview in the right column */
   withPreview?: boolean;
+  footerText?: string;
+  footerHref?: string;
+  footerLabel?: string;
 }
 
 /** A compact single-column dropdown. */
@@ -108,7 +110,8 @@ const NAV: NavConfig[] = [
             },
             {
               label: "Employee Onboarding",
-              href: "/solutions/hr",
+              href: "/solutions/employee-onboarding",
+              tag: "Live",
               description: "Turn new hires into productive employees with automated onboarding.",
               meta: [{ label: "Plugins", value: "9" }, { label: "Integrations", value: "5" }],
             },
@@ -121,7 +124,8 @@ const NAV: NavConfig[] = [
             },
             {
               label: "Sales Outreach",
-              href: "/solutions/sales",
+              href: "/solutions/sales-outreach",
+              tag: "Live",
               description: "Automate personalized outreach and follow-ups across channels.",
               meta: [{ label: "Plugins", value: "9" }, { label: "Integrations", value: "5" }],
             },
@@ -189,12 +193,15 @@ const NAV: NavConfig[] = [
     },
   },
 
-  // ── Platform ───────────────────────────────────────────────────────────────
+  // ── Services (Platform + Products) ────────────────────────────────────────
   {
-    label: "Platform",
+    label: "Services",
     menu: {
       kind: "mega",
       withPreview: true,
+      footerText: "AI employees · Agents · Products · Integrations",
+      footerHref: "/platform/ai-employees",
+      footerLabel: "Explore services →",
       groups: [
         {
           heading: "Core Platform",
@@ -231,21 +238,42 @@ const NAV: NavConfig[] = [
             },
           ],
         },
-      ],
-    },
-  },
-
-  // ── Products ───────────────────────────────────────────────────────────────
-  {
-    label: "Products",
-    menu: {
-      kind: "simple",
-      items: [
-        { label: "Hiring Intelligence", href: "/products/hiring-intelligence", tag: "Live" },
-        { label: "Voice AI",             href: "/products/voice-ai" },
-        { label: "Campaigns",            href: "/products/campaigns" },
-        { label: "Candidate Intelligence", href: "/products/candidate-intelligence" },
-        { label: "Analytics",            href: "/products/analytics" },
+        {
+          heading: "Products",
+          items: [
+            {
+              label: "Hiring Intelligence",
+              href: "/products/hiring-intelligence",
+              tag: "Live",
+              description: "Make faster, more informed hiring decisions with intelligent talent insights.",
+              meta: [{ label: "Type", value: "Hiring" }],
+            },
+            {
+              label: "Voice AI",
+              href: "/products/voice-ai",
+              description: "Create natural voice experiences for candidate and customer conversations.",
+              meta: [{ label: "Type", value: "Voice" }],
+            },
+            {
+              label: "Campaigns",
+              href: "/products/campaigns",
+              description: "Plan and run targeted campaigns with intelligent workflow automation.",
+              meta: [{ label: "Type", value: "Campaigns" }],
+            },
+            {
+              label: "Candidate Intelligence",
+              href: "/products/candidate-intelligence",
+              description: "Turn candidate data into clearer insights across the hiring journey.",
+              meta: [{ label: "Type", value: "Talent" }],
+            },
+            {
+              label: "Analytics",
+              href: "/products/analytics",
+              description: "Understand workflow and team performance with actionable analytics.",
+              meta: [{ label: "Type", value: "Insights" }],
+            },
+          ],
+        },
       ],
     },
   },
@@ -483,15 +511,15 @@ function MegaMenuPanel({
         style={{ borderColor: "rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}
       >
         <p className="text-[11px]" style={{ color: "rgba(255,255,255,0.28)" }}>
-          AI agents · Workflows · Plugins · Integrations
+          {config.footerText ?? "AI agents · Workflows · Plugins · Integrations"}
         </p>
         <Link
-          href="/solutions"
+          href={config.footerHref ?? "/solutions"}
           onClick={onClose}
           className="text-[11px] font-semibold transition-colors hover:opacity-75"
           style={{ color: BRAND }}
         >
-          See all solutions →
+          {config.footerLabel ?? "See all solutions →"}
         </Link>
       </div>
     </div>
@@ -505,17 +533,21 @@ function MegaMenuPanel({
 function NavButton({
   config,
   active,
+  dark,
   onOpen,
   onClose,
 }: {
   config: NavConfig;
   active: boolean;
+  dark: boolean;
   onOpen: () => void;
   onClose: () => void;
 }) {
   const hasMenu = config.menu !== null;
   const btnCls = `flex items-center gap-0.5 text-[13px] font-medium px-3 py-2 transition-colors rounded-lg ${
-    active ? "text-white bg-white/[0.05]" : "text-slate-400 hover:text-white hover:bg-white/[0.03]"
+    dark
+      ? active ? "text-white bg-white/[0.05]" : "text-slate-400 hover:text-white hover:bg-white/[0.03]"
+      : active ? "text-slate-900 bg-slate-100" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
   }`;
 
   return (
@@ -565,7 +597,20 @@ function NavButton({
 // MOBILE MENU  (accordion)
 // ─────────────────────────────────────────────────────────────────────────────
 
-function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+function ThemeIcon({ dark }: { dark: boolean }) {
+  return dark ? (
+    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+      <circle cx="12" cy="12" r="4" />
+      <path strokeLinecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+    </svg>
+  ) : (
+    <svg aria-hidden="true" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />
+    </svg>
+  );
+}
+
+function MobileMenu({ open, onClose, dark, onToggleTheme }: { open: boolean; onClose: () => void; dark: boolean; onToggleTheme: () => void }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const pathname = usePathname();
 
@@ -593,13 +638,13 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   }
 
   return (
-    <div className="fixed inset-0 z-40 flex flex-col bg-black/97 backdrop-blur-sm">
+    <div className={`fixed inset-0 z-40 flex flex-col backdrop-blur-sm ${dark ? "bg-black/97" : "bg-white/97"}`}>
       {/* Close button */}
       <div className="flex items-center justify-between px-6 pt-5 pb-2">
         <Link href="/" onClick={onClose}>
-          <Image src={logoImage} alt="SoloBuild" width={100} height={32} className="object-contain" />
+          <BrandLogo compact />
         </Link>
-        <button onClick={onClose} className="p-2 text-white/60 hover:text-white">
+        <button onClick={onClose} className={`p-2 ${dark ? "text-white/60 hover:text-white" : "text-slate-500 hover:text-slate-900"}`}>
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -607,7 +652,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
       </div>
 
       <div className="overflow-y-auto flex-1 px-4 py-4">
-        <Link href="/" onClick={onClose} className="flex items-center gap-2 px-3 py-3 rounded-xl text-sm font-medium text-white hover:bg-white/5 transition-colors mb-1">
+        <Link href="/" onClick={onClose} className={`flex items-center gap-2 px-3 py-3 rounded-xl text-sm font-medium transition-colors mb-1 ${dark ? "text-white hover:bg-white/5" : "text-slate-900 hover:bg-slate-100"}`}>
           Home
         </Link>
 
@@ -618,7 +663,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           return (
             <div key={nav.label} className="mb-1">
               <button
-                className="w-full flex items-center justify-between px-3 py-3 rounded-xl text-sm font-medium text-white hover:bg-white/5 transition-colors"
+                className={`w-full flex items-center justify-between px-3 py-3 rounded-xl text-sm font-medium transition-colors ${dark ? "text-white hover:bg-white/5" : "text-slate-900 hover:bg-slate-100"}`}
                 onClick={() => setExpanded(isOpen ? null : nav.label)}
               >
                 <span>{nav.label}</span>
@@ -699,13 +744,14 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         })}
       </div>
 
-      <div className="border-t border-white/10 px-4 py-4 flex flex-col gap-3">
-        <Link href="/signin" onClick={onClose} className="w-full px-4 py-3 text-sm font-medium text-white border border-white/15 hover:border-white/30 text-center transition-colors rounded-xl">
+      <div className={`border-t px-4 py-4 flex flex-col gap-3 ${dark ? "border-white/10" : "border-slate-200"}`}>
+        <Link href="/signin" onClick={onClose} className={`w-full px-4 py-3 text-sm font-medium text-center transition-colors rounded-xl border ${dark ? "text-white border-white/15 hover:border-white/30" : "text-slate-900 border-slate-300 hover:border-slate-500"}`}>
           Sign In
         </Link>
-        <Link href="/demo" onClick={onClose} className="w-full px-4 py-3 text-sm font-medium text-white bg-[#0066FF] hover:bg-[#0052cc] text-center transition-colors rounded-xl">
-          Get Started
-        </Link>
+        <button onClick={onToggleTheme} className={`flex w-full items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-center transition-colors rounded-xl ${dark ? "text-white hover:bg-white/5" : "text-slate-900 hover:bg-slate-100"}`}>
+          <ThemeIcon dark={dark} />
+          {dark ? "Light mode" : "Dark mode"}
+        </button>
       </div>
     </div>
   );
@@ -717,9 +763,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
 function Logo() {
   return (
-    <Link href="/" className="relative flex h-9 w-[132px] items-center flex-shrink-0 overflow-hidden">
-      <Image src={logoImage} alt="SoloBuild" fill sizes="132px" className="object-cover" priority />
-    </Link>
+    <Link href="/"><BrandLogo /></Link>
   );
 }
 
@@ -733,8 +777,20 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
 
   const [activeMenu, setActiveMenu]   = useState<string | null>(null);
   const [mobileOpen, setMobileOpen]   = useState(false);
+  const [dark, setDark] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.localStorage.getItem("solobuild-theme") !== "light";
+  });
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+    document.documentElement.style.colorScheme = dark ? "dark" : "light";
+    window.localStorage.setItem("solobuild-theme", dark ? "dark" : "light");
+  }, [dark]);
+
+  const toggleTheme = useCallback(() => setDark((current) => !current), []);
 
   // ── Escape key ──────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -772,7 +828,7 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
   }, []);
 
   const inner = (
-    <div
+      <div
       ref={navRef}
       className={`flex items-center justify-between h-[58px] ${framed ? "px-5 sm:px-6" : "px-6"}`}
     >
@@ -783,7 +839,9 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
         <Link
           href="/"
           className={`relative text-[13px] font-medium px-3 py-2 rounded-lg transition-colors ${
-            isHome ? "text-white bg-white/[0.05]" : "text-slate-400 hover:text-white hover:bg-white/[0.03]"
+            dark
+              ? isHome ? "text-white bg-white/[0.05]" : "text-slate-400 hover:text-white hover:bg-white/[0.03]"
+              : isHome ? "text-slate-900 bg-slate-100" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
           }`}
         >
           Home
@@ -797,6 +855,7 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
             key={nav.label}
             config={nav}
             active={activeMenu === nav.label}
+            dark={dark}
             onOpen={() => handleOpen(nav.label)}
             onClose={handleClose}
           />
@@ -806,14 +865,20 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
       {/* ── Desktop right ────────────────────────────────────────────── */}
       <div className="hidden lg:flex items-center gap-3">
         <Link
-          href="/demo"
-          className="inline-flex items-center gap-2 px-4 py-2 text-[13px] font-medium text-white border border-white/15 hover:border-white/30 rounded-xl transition-colors"
+          href="/signin"
+          className={`inline-flex items-center px-3 py-2 text-[13px] font-medium rounded-lg transition-colors ${dark ? "text-slate-300 hover:text-white" : "text-slate-600 hover:text-slate-900"}`}
         >
-          Get Started
-          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
+          Sign In
         </Link>
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+          title={dark ? "Switch to light mode" : "Switch to dark mode"}
+          className={`inline-flex items-center justify-center p-2 rounded-lg transition-colors ${dark ? "text-slate-300 hover:text-white hover:bg-white/[0.05]" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"}`}
+        >
+          <ThemeIcon dark={dark} />
+        </button>
       </div>
 
       {/* ── Mobile hamburger ─────────────────────────────────────────── */}
@@ -840,14 +905,14 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
       <header
         className={
           framed
-            ? "fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md px-2 sm:px-3 pt-2 sm:pt-3"
-            : "fixed top-0 left-0 right-0 z-50 bg-black border-b border-white/10"
+            ? `fixed top-0 left-0 right-0 z-50 backdrop-blur-md px-2 sm:px-3 pt-2 sm:pt-3 ${dark ? "bg-black/80" : "bg-white/80"}`
+            : `fixed top-0 left-0 right-0 z-50 border-b ${dark ? "bg-black border-white/10" : "bg-white border-slate-200"}`
         }
       >
         <nav
           className={
             framed
-              ? "rounded-2xl border border-white/12 bg-black"
+              ? `rounded-2xl border ${dark ? "border-white/12 bg-black" : "border-slate-200 bg-white"}`
               : "max-w-[1600px] mx-auto"
           }
           aria-label="Site navigation"
@@ -856,7 +921,7 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
         </nav>
       </header>
 
-      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} dark={dark} onToggleTheme={toggleTheme} />
 
       {!framed && <div className="h-14" />}
     </>

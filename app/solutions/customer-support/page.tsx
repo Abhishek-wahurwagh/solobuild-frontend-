@@ -7,5 +7,5 @@ export const metadata = {
 };
 
 export default function CustomerSupportPage() {
-  return <SolutionOverviewPage solution={CS_SOLUTION} />;
+  return <SolutionOverviewPage solution={CS_SOLUTION} heroImage="/images/hero-woman.png" />;
 }

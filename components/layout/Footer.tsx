@@ -1,6 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-import logoImage from "@/app/7526.png";
+import BrandLogo from "./BrandLogo";
 
 const FOOTER_LINKS = {
   Platform: [
@@ -54,9 +53,7 @@ export default function Footer({ compact = false, wide = false }: { compact?: bo
       <footer className={`${wide ? "px-0" : "px-2 sm:px-3"} pb-2 sm:pb-3`}>
         <div className="rounded-2xl border border-white/12 bg-black px-5 sm:px-6 py-4">
           <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-            <Link href="/" className="relative flex h-9 w-[132px] items-center flex-shrink-0 overflow-hidden">
-              <Image src={logoImage} alt="SoloBuildAI" fill sizes="132px" className="object-cover" priority />
-            </Link>
+            <Link href="/"><BrandLogo /></Link>
 
             <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 lg:mx-auto">
               {COMPACT_LINKS.map((link) => (
@@ -95,9 +92,7 @@ export default function Footer({ compact = false, wide = false }: { compact?: bo
       <div className="max-w-[1400px] mx-auto px-6 py-16">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-14">
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
-            <Link href="/" className="relative mb-6 flex h-9 w-[132px] items-center overflow-hidden">
-              <Image src={logoImage} alt="SoloBuildAI" fill sizes="132px" className="object-cover" priority />
-            </Link>
+            <Link href="/" className="mb-6 flex"><BrandLogo /></Link>
             <p className="text-xs leading-relaxed text-slate-600">
               AI agents for real work.
             </p>

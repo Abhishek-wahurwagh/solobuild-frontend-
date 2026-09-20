@@ -40,6 +40,8 @@ export default function ServiceOperationsPage() {
       plugins={ALL_IT_OPS_PLUGINS}
       stages={IT_OPS_STAGES}
       categories={[...CATEGORIES]}
+      heroImage="/images/editorial-man.png"
+      heroBadge="AI IT operations active"
     />
   );
 }

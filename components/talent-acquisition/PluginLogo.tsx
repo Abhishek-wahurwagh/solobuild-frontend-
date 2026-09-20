@@ -121,6 +121,22 @@ function HubSpotIcon({ className }: { className: string }) {
   );
 }
 
+function Microsoft365Icon({ className }: { className: string }) {
+  return <svg className={className} viewBox="0 0 24 24"><path d="M3 4h8v8H3zM13 4h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z" fill="#F25022" /><path d="M13 4h8v8h-8zM13 13h8v8h-8z" fill="#7FBA00" /><path d="M3 4h8v8H3z" fill="#00A4EF" /><path d="M3 13h8v8H3z" fill="#FFB900" /></svg>;
+}
+
+function GoogleWorkspaceIcon({ className }: { className: string }) {
+  return <svg className={className} viewBox="0 0 24 24" fill="none"><path d="M12 4a8 8 0 1 0 7.5 10.8" stroke="#4285F4" strokeWidth="3" strokeLinecap="round" /><path d="M19.5 14.8V10H12" stroke="#34A853" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /><path d="M5.3 17.2 8 14.5" stroke="#FBBC05" strokeWidth="3" strokeLinecap="round" /><path d="M5.3 6.8 8 9.5" stroke="#EA4335" strokeWidth="3" strokeLinecap="round" /></svg>;
+}
+
+function LinkedInIcon({ className }: { className: string }) {
+  return <svg className={className} viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="#0A66C2" /><circle cx="8" cy="8" r="1.3" fill="white" /><path d="M7 11v6M11 17v-3.2a2 2 0 0 1 4 0V17M11 11v6" stroke="white" strokeWidth="1.6" strokeLinecap="round" /></svg>;
+}
+
+function SalesforceIcon({ className }: { className: string }) {
+  return <svg className={className} viewBox="0 0 24 24"><path d="M7.2 17.5a4 4 0 0 1-.7-7.9A5.7 5.7 0 0 1 17 8.2a3.7 3.7 0 0 1 .6 7.3H7.2Z" fill="#0D9DDA" /><path d="M7.2 14.2h9.2" stroke="white" strokeWidth="1.4" strokeLinecap="round" /></svg>;
+}
+
 // ── SoloBuildAI native capability logos ────────────────────────────────────
 // Each has a distinct accent color and an appropriate icon.
 
@@ -230,6 +246,10 @@ const EXTERNAL_ICONS: Partial<Record<LogoType, IconRenderer>> = {
   slack:            SlackIcon,
   confluence:       ConfluenceIcon,
   hubspot:          HubSpotIcon,
+  "microsoft-365":  Microsoft365Icon,
+  "google-workspace": GoogleWorkspaceIcon,
+  linkedin:         LinkedInIcon,
+  salesforce:       SalesforceIcon,
 };
 
 // ── Main component ──────────────────────────────────────────────────────────

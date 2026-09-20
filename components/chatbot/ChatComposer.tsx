@@ -1,0 +1,32 @@
+"use client";
+
+import { FormEvent, useState } from "react";
+import { SendIcon } from "./Icon";
+
+export default function ChatComposer({ onSubmit, compact = false }: { onSubmit: (message: string) => void; compact?: boolean }) {
+  const [value, setValue] = useState("");
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const message = value.trim();
+    if (!message) return;
+    onSubmit(message);
+    setValue("");
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className={`flex items-center gap-2 rounded-xl border border-white/12 bg-white/[0.03] p-2 transition-colors focus-within:border-[#0066FF]/60 ${compact ? "" : "shadow-[0_-10px_30px_rgba(0,0,0,0.15)]"}`}>
+      <button type="button" aria-label="Attach a file" className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-white/5 hover:text-white sm:flex">
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}><path strokeLinecap="round" strokeLinejoin="round" d="m20.5 11.5-7.75 7.75a5 5 0 0 1-7.07-7.07l8.13-8.13a3.5 3.5 0 1 1 4.95 4.95l-8.13 8.13a2 2 0 0 1-2.83-2.83l7.42-7.42" /></svg>
+      </button>
+      <input value={value} onChange={(event) => setValue(event.target.value)} placeholder="Ask SoloBuildAI anything..." aria-label="Ask SoloBuildAI anything" className="min-w-0 flex-1 bg-transparent px-2 text-[13px] text-white outline-none placeholder:text-slate-600" />
+      <button type="button" aria-label="Add a tool" className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-white/5 hover:text-white sm:flex">
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18M3 12h18" /></svg>
+      </button>
+      <button type="button" aria-label="Expand chat" className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-white/5 hover:text-white md:flex">
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}><path strokeLinecap="round" strokeLinejoin="round" d="M8 4H4v4M16 4h4v4M8 20H4v-4M20 16v4h-4" /></svg>
+      </button>
+      <button type="submit" aria-label="Send message" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0066FF] text-white transition-colors hover:bg-[#0052cc]"><SendIcon /></button>
+    </form>
+  );
+}

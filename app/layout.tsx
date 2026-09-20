@@ -24,7 +24,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
+    <html lang="en" className={`${inter.variable} h-full`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `(() => { const theme = localStorage.getItem("solobuild-theme") || "dark"; document.documentElement.dataset.theme = theme; document.documentElement.style.colorScheme = theme; })()` }} />
+      </head>
       <body className="min-h-full bg-black text-white antialiased">
         {children}
       </body>
