@@ -4,6 +4,7 @@ import { useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import PageLayout from "@/components/layout/PageLayout";
+import IntegrationLogo from "@/components/solutions/IntegrationLogo";
 import PluginLogo from "@/components/talent-acquisition/PluginLogo";
 import {
   ALL_TALENT_PLUGINS,
@@ -417,29 +418,6 @@ function PluginDetailPanel({
   );
 }
 
-// ─── Integration marquee mark ─────────────────────────────────────────────────
-function IntegrationMark({ name }: { name: string }) {
-  const colors: Record<string, string> = {
-    "Google Calendar": "#4285F4",
-    Jira:       "#2684FF",
-    Workable:   "#F47B20",
-    BambooHR:   "#73BE44",
-    Ashby:      "#7C5CFC",
-    Slack:      "#E01E5A",
-    Confluence: "#1868DB",
-    HubSpot:    "#FF7A59",
-  };
-  const abbr = name === "Google Calendar" ? "GC" : name.slice(0, 2).toUpperCase();
-  return (
-    <span
-      className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-[10px] font-bold"
-      style={{ color: colors[name] ?? "#64748B" }}
-    >
-      {abbr}
-    </span>
-  );
-}
-
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function TalentAcquisitionPage() {
   const workflowRef = useRef<HTMLElement>(null);
@@ -597,7 +575,7 @@ export default function TalentAcquisitionPage() {
         <section className="overflow-hidden rounded-2xl border border-white/10 bg-[#07090D] py-8">
           <div className="px-7 sm:px-10 lg:px-14">
             <p className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: BLUE }}>
-              Integrates with your tools
+              INTEGRATES WITH YOUR TOOLS
             </p>
           </div>
           <div className="mt-6 overflow-hidden border-y border-white/10 py-3">
@@ -608,7 +586,7 @@ export default function TalentAcquisitionPage() {
                   className="flex shrink-0 items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-xs"
                   style={{ color: "rgba(255,255,255,0.60)" }}
                 >
-                  <IntegrationMark name={name} />
+                  <IntegrationLogo name={name} />
                   {name}
                 </div>
               ))}

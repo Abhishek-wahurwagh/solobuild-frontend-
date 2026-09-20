@@ -39,6 +39,7 @@ type WorkflowSolution = {
   exploreLabel: string;
   heroAlt: string;
   activeMessage: string;
+  heroImage: string;
   metrics: [string, string][];
   integrations: string[];
   categories: string[];
@@ -57,6 +58,7 @@ const EMPLOYEE_ONBOARDING: WorkflowSolution = {
   exploreLabel: "Explore Onboarding Workflow →",
   heroAlt: "Employee onboarding team working together",
   activeMessage: "AI onboarding system active",
+  heroImage: "/images/hero-woman.png",
   metrics: [["6", "Workflow steps"], ["12+", "Ready-to-use plugins"], ["95%", "Automation rate"], ["70%", "Faster onboarding"]],
   integrations: ["HR System", "Document Management", "Email & Calendar", "Identity Management", "Slack", "Microsoft 365", "Google Workspace"],
   categories: ["All", "Verification", "Access", "Documents", "Learning", "Communication", "Compliance", "Reporting", "Integration"],
@@ -96,6 +98,7 @@ const SALES_OUTREACH: WorkflowSolution = {
   exploreLabel: "Explore Sales Workflow →",
   heroAlt: "Sales team collaborating on outreach",
   activeMessage: "AI sales system active",
+  heroImage: "/images/editorial-man.png",
   metrics: [["6", "Workflow steps"], ["10+", "Ready-to-use plugins"], ["85%", "Automation rate"], ["60%", "Faster follow-ups"]],
   integrations: ["CRM", "Email & Calendar", "LinkedIn", "Salesforce", "HubSpot", "Google Workspace", "Slack"],
   categories: ["All", "Lead Management", "Qualification", "Outreach", "CRM", "Pipeline", "Scheduling", "Reporting", "Integration"],
@@ -184,7 +187,7 @@ export default function WorkflowSolutionPage({ config }: { config: WorkflowSolut
   return <PageLayout framed wide><div className="space-y-3 bg-[#05070B] text-white">
     <section className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#07090D]"><div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle, rgba(0,102,255,0.18) 1px, transparent 1px)", backgroundSize: "28px 28px" }} /><div className="relative px-7 py-14 sm:px-10 lg:px-14"><div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
       <div><div className="mb-7 flex items-center gap-2"><Link href="/solutions" className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/35">{config.eyebrow.split(" /").slice(0, 2).join(" /")}</Link><span className="text-white/20">/</span><span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#0066FF]">{config.eyebrow.split(" /").slice(2).join(" / ")}</span></div><h1 className="max-w-3xl text-5xl font-medium leading-[0.98] tracking-[-0.05em] sm:text-6xl lg:text-7xl">{config.heading}<br /><span>{config.headingLead}{config.headingAccent && <span className="text-[#0066FF]">{config.headingAccent}</span>}</span></h1><p className="mt-7 max-w-xl text-base leading-relaxed text-white/50">{config.description}</p><div className="mt-9 flex flex-wrap gap-3"><button onClick={() => workflowRef.current?.scrollIntoView({ behavior: "smooth" })} className="rounded-lg bg-[#0066FF] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-85">{config.exploreLabel}</button><button onClick={() => marketplaceRef.current?.scrollIntoView({ behavior: "smooth" })} className="rounded-lg border border-white/15 px-5 py-3 text-sm text-white/75 transition-colors hover:border-white/35 hover:text-white">Browse Plugins</button></div></div>
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40"><div className="absolute inset-0 bg-gradient-to-tr from-[#0066FF]/20 via-transparent to-transparent" /><Image src="/images/hero-woman.png" alt={config.heroAlt} width={900} height={700} priority className="h-[340px] w-full object-cover object-center opacity-60 grayscale sm:h-[400px]" /><div className="absolute bottom-5 left-5 rounded-lg border border-white/15 bg-black/70 px-4 py-3 text-xs text-white/75 backdrop-blur-sm"><span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#0066FF]" />{config.activeMessage}</div></div></div>
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40"><div className="absolute inset-0 bg-gradient-to-tr from-[#0066FF]/20 via-transparent to-transparent" /><Image src={config.heroImage} alt={config.heroAlt} width={900} height={700} priority className="h-[340px] w-full object-cover object-center opacity-60 grayscale sm:h-[400px]" /><div className="absolute bottom-5 left-5 rounded-lg border border-white/15 bg-black/70 px-4 py-3 text-xs text-white/75 backdrop-blur-sm"><span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#0066FF]" />{config.activeMessage}</div></div></div>
       <div className="mt-14 grid grid-cols-2 gap-6 border-t border-white/10 pt-6 sm:grid-cols-4 sm:gap-0">{config.metrics.map(([value, label]) => <div key={label} className="sm:border-r sm:border-white/10 sm:pl-6 first:pl-0 last:border-0"><p className="text-2xl font-medium text-white">{value}</p><p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/35">{label}</p></div>)}</div>
     </div></section>
 

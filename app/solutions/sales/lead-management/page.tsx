@@ -43,6 +43,8 @@ export default function LeadManagementPage() {
       plugins={ALL_SALES_PLUGINS}
       stages={SALES_STAGES}
       categories={[...CATEGORIES]}
+      heroImage="/images/editorial-man.png"
+      heroBadge="AI sales system active"
     />
   );
 }

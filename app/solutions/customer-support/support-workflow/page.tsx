@@ -43,6 +43,8 @@ export default function SupportWorkflowPage() {
       plugins={ALL_CS_PLUGINS}
       stages={CS_STAGES}
       categories={[...CATEGORIES]}
+      heroImage="/images/hero-woman.png"
+      heroBadge="AI support system active"
     />
   );
 }

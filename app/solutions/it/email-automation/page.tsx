@@ -39,6 +39,8 @@ export default function EmailAutomationPage() {
       plugins={ALL_IT_EMAIL_PLUGINS}
       stages={IT_EMAIL_STAGES}
       categories={[...CATEGORIES]}
+      heroImage="/images/editorial-man.png"
+      heroBadge="AI email operations active"
     />
   );
 }

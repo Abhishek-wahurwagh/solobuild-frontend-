@@ -9,8 +9,10 @@
  */
 
 import { useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import PageLayout from "@/components/layout/PageLayout";
+import IntegrationLogo from "./IntegrationLogo";
 import SolutionPluginLogo from "./SolutionPluginLogo";
 import { categoryColor, type SolutionPlugin, type SolutionStage } from "@/lib/solutions/types";
 
@@ -43,6 +45,9 @@ interface WorkflowPageProps {
   stages: SolutionStage[];
   /** Category filter options — null means "All" */
   categories: Array<string | null>;
+  /** Shared hero image and status badge. */
+  heroImage: string;
+  heroBadge: string;
 }
 
 // ─── Category filter ──────────────────────────────────────────────────────────
@@ -424,29 +429,6 @@ function DetailPanel({
   );
 }
 
-// ─── Integration mark (marquee) ───────────────────────────────────────────────
-function IntegrationMark({ name }: { name: string }) {
-  const colors: Record<string, string> = {
-    Salesforce: "#00A1E0", "HubSpot CRM": "#FF7A59", Zendesk: "#03363D",
-    ServiceNow: "#62D84E", Jira: "#2684FF", Confluence: "#1868DB",
-    Slack: "#E01E5A", "Google Calendar": "#4285F4", Gmail: "#EA4335",
-    Outlook: "#0078D4", "Microsoft Teams": "#5059C9", "Google Workspace": "#34A853",
-  };
-  const abbr =
-    name === "Google Calendar" ? "GC" :
-    name === "Microsoft Teams" ? "MT" :
-    name === "HubSpot CRM" ? "HS" :
-    name.slice(0, 2).toUpperCase();
-  return (
-    <span
-      className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-[10px] font-bold"
-      style={{ color: colors[name] ?? "#64748B" }}
-    >
-      {abbr}
-    </span>
-  );
-}
-
 // ─── Main exported component ──────────────────────────────────────────────────
 export default function SolutionWorkflowPage({
   eyebrow,
@@ -460,6 +442,8 @@ export default function SolutionWorkflowPage({
   plugins,
   stages,
   categories,
+  heroImage,
+  heroBadge,
 }: WorkflowPageProps) {
   const workflowRef    = useRef<HTMLElement>(null);
   const marketplaceRef = useRef<HTMLElement>(null);
@@ -545,6 +529,21 @@ export default function SolutionWorkflowPage({
                 </div>
               </div>
 
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40">
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#0066FF]/20 via-transparent to-transparent" />
+                <Image
+                  src={heroImage}
+                  alt={`${workflowLabel} hero`}
+                  width={900}
+                  height={700}
+                  priority
+                  className="h-[340px] w-full object-cover object-center opacity-60 grayscale sm:h-[400px]"
+                />
+                <div className="absolute bottom-5 left-5 rounded-lg border border-white/15 bg-black/70 px-4 py-3 text-xs text-white/75 backdrop-blur-sm">
+                  <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#0066FF]" />{heroBadge}
+                </div>
+              </div>
+
               {/* Stats */}
               <div className="grid grid-cols-2 gap-6 sm:gap-0">
                 {stats.map((stat, i) => (
@@ -568,7 +567,7 @@ export default function SolutionWorkflowPage({
         <section className="overflow-hidden rounded-2xl border border-white/10 bg-[#07090D] py-8">
           <div className="px-7 sm:px-10 lg:px-14">
             <p className="text-[10px] font-semibold uppercase tracking-[0.25em]" style={{ color: BLUE }}>
-              Integrates with your tools
+              INTEGRATES WITH YOUR TOOLS
             </p>
           </div>
           <div className="mt-6 overflow-hidden border-y border-white/10 py-3">
@@ -579,7 +578,7 @@ export default function SolutionWorkflowPage({
                   className="flex shrink-0 items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-xs"
                   style={{ color: "rgba(255,255,255,0.60)" }}
                 >
-                  <IntegrationMark name={name} />
+                  <IntegrationLogo name={name} />
                   {name}
                 </div>
               ))}

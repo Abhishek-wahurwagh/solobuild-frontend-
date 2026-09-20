@@ -3,8 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
-import logoImage from "@/app/7526.png";
+import BrandLogo from "./BrandLogo";
 
 const BRAND = "#0066FF";
 
@@ -643,7 +642,7 @@ function MobileMenu({ open, onClose, dark, onToggleTheme }: { open: boolean; onC
       {/* Close button */}
       <div className="flex items-center justify-between px-6 pt-5 pb-2">
         <Link href="/" onClick={onClose}>
-          <Image src={logoImage} alt="SoloBuild" width={100} height={32} className="object-contain" />
+          <BrandLogo compact />
         </Link>
         <button onClick={onClose} className={`p-2 ${dark ? "text-white/60 hover:text-white" : "text-slate-500 hover:text-slate-900"}`}>
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -764,9 +763,7 @@ function MobileMenu({ open, onClose, dark, onToggleTheme }: { open: boolean; onC
 
 function Logo() {
   return (
-    <Link href="/" className="relative flex h-9 w-[132px] items-center flex-shrink-0 overflow-hidden">
-      <Image src={logoImage} alt="SoloBuild" fill sizes="132px" className="object-cover" priority />
-    </Link>
+    <Link href="/"><BrandLogo /></Link>
   );
 }
 
@@ -788,6 +785,7 @@ export default function Navbar({ framed = false }: { framed?: boolean }) {
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
     document.documentElement.style.colorScheme = dark ? "dark" : "light";
     window.localStorage.setItem("solobuild-theme", dark ? "dark" : "light");
   }, [dark]);
