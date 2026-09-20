@@ -4,6 +4,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import concreteBuildingImage from "@/app/file_00000000f12481fba98e0793f2268462.png";
 import AgentRailSection from "@/components/sections/AgentRailSection";
+import AIAssistantShowcase from "@/components/sections/AIAssistantShowcase";
 
 const STEPS = [
   { num: "01", title: "Describe", desc: "Tell us the role and who you want to reach." },
@@ -106,6 +107,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <AIAssistantShowcase />
 
       {/* PLATFORM CAPABILITIES */}
       <AgentRailSection />

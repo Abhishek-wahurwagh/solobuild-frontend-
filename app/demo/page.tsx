@@ -35,7 +35,7 @@ export default function DemoPage() {
               <div className="space-y-6">
                 {[
                   { title: "30-minute session", desc: "A focused walkthrough tailored to your workflow and team." },
-                  { title: "Live demo", desc: "See AI voice screening, candidate management and recruiter tools in action." },
+                  { title: "Live demo", desc: "Experience how SoloBuildAI uses AI-powered employees, intelligent workflows, and automation to simplify real business operations." },
                   { title: "Q&A time", desc: "Ask anything about how SoloBuildAI works, integrates, and scales." },
                   { title: "No pressure", desc: "This is a conversation, not a sales call. We want to make sure we're a good fit." },
                 ].map((item) => (
