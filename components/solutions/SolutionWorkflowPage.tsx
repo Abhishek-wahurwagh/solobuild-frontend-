@@ -45,9 +45,9 @@ interface WorkflowPageProps {
   stages: SolutionStage[];
   /** Category filter options — null means "All" */
   categories: Array<string | null>;
-  /** Shared hero image and status badge. */
-  heroImage: string;
-  heroBadge: string;
+  /** Shared hero image and status badge — both optional. */
+  heroImage?: string;
+  heroBadge?: string;
 }
 
 // ─── Category filter ──────────────────────────────────────────────────────────
@@ -531,16 +531,20 @@ export default function SolutionWorkflowPage({
 
               <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/40">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#0066FF]/20 via-transparent to-transparent" />
-                <Image
-                  src={heroImage}
-                  alt={`${workflowLabel} hero`}
-                  width={900}
-                  height={700}
-                  priority
-                  className="h-[340px] w-full object-cover object-center opacity-60 grayscale sm:h-[400px]"
-                />
+                {heroImage ? (
+                  <Image
+                    src={heroImage}
+                    alt={`${workflowLabel} hero`}
+                    width={900}
+                    height={700}
+                    priority
+                    className="h-[340px] w-full object-cover object-center opacity-60 grayscale sm:h-[400px]"
+                  />
+                ) : (
+                  <div className="h-[340px] w-full sm:h-[400px]" />
+                )}
                 <div className="absolute bottom-5 left-5 rounded-lg border border-white/15 bg-black/70 px-4 py-3 text-xs text-white/75 backdrop-blur-sm">
-                  <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#0066FF]" />{heroBadge}
+                  <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#0066FF]" />{heroBadge ?? `${workflowLabel} active`}
                 </div>
               </div>
 

@@ -294,7 +294,7 @@ export const SALES_SOLUTION: SolutionDef = {
       description: "Personalized outreach and email sequences at scale.",
       pluginCount: "3 plugins",
       integrationCount: "2 integrations",
-      href: "/solutions/sales",
+      href: "/solutions/sales/sales-outreach",
       icon: "mail",
     },
     {
@@ -303,7 +303,7 @@ export const SALES_SOLUTION: SolutionDef = {
       description: "Track and advance opportunities through the sales cycle.",
       pluginCount: "3 plugins",
       integrationCount: "2 integrations",
-      href: "/solutions/sales",
+      href: "/solutions/sales/opportunity-management",
       icon: "chart",
     },
     {
@@ -312,7 +312,7 @@ export const SALES_SOLUTION: SolutionDef = {
       description: "Book prospect and customer meetings without manual coordination.",
       pluginCount: "2 plugins",
       integrationCount: "2 integrations",
-      href: "/solutions/sales",
+      href: "/solutions/sales/meeting-scheduling",
       icon: "calendar",
     },
   ],

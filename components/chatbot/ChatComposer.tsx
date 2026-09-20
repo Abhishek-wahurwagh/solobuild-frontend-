@@ -23,6 +23,17 @@ export default function ChatComposer({ onSubmit, compact = false }: { onSubmit: 
       <button type="button" aria-label="Add a tool" className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-white/5 hover:text-white sm:flex">
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18M3 12h18" /></svg>
       </button>
+      <button
+        type="button"
+        aria-label="Voice input"
+        title="Voice input"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-[#0066FF]/15 hover:text-[#0066FF]"
+      >
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}>
+          <rect x="9" y="2" width="6" height="11" rx="3" strokeLinecap="round" strokeLinejoin="round" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M5 10a7 7 0 0 0 14 0M12 19v3m-3 0h6" />
+        </svg>
+      </button>
       <button type="button" aria-label="Expand chat" className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-white/5 hover:text-white md:flex">
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.7}><path strokeLinecap="round" strokeLinejoin="round" d="M8 4H4v4M16 4h4v4M8 20H4v-4M20 16v4h-4" /></svg>
       </button>

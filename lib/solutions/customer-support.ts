@@ -301,7 +301,7 @@ export const CS_SOLUTION: SolutionDef = {
       description: "Surface the right information for every customer interaction.",
       pluginCount: "3 plugins",
       integrationCount: "2 integrations",
-      href: "/solutions/customer-support",
+      href: "/solutions/customer-support/knowledge-resolution",
       icon: "book",
     },
     {
@@ -310,7 +310,7 @@ export const CS_SOLUTION: SolutionDef = {
       description: "Intelligently escalate issues before SLAs are breached.",
       pluginCount: "3 plugins",
       integrationCount: "2 integrations",
-      href: "/solutions/customer-support",
+      href: "/solutions/customer-support/escalation",
       icon: "alert",
     },
     {
@@ -319,7 +319,7 @@ export const CS_SOLUTION: SolutionDef = {
       description: "Understand performance, trends, and improvement opportunities.",
       pluginCount: "2 plugins",
       integrationCount: "2 integrations",
-      href: "/solutions/customer-support",
+      href: "/solutions/customer-support/support-analytics",
       icon: "chart",
     },
   ],

@@ -56,8 +56,29 @@ interface SimpleMenuConfig {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MENU DATA
+// MENU DATA — built from the shared nav-data registry
 // ─────────────────────────────────────────────────────────────────────────────
+
+import { SOLUTION_NAV } from "@/lib/solutions/nav-data";
+
+// Solution-level items (HR, Sales, CS, IT)
+const solutionMenuItems = SOLUTION_NAV.map((sol) => ({
+  label: sol.label,
+  href: sol.href,
+  description: sol.description,
+  /** Keep the solution id so the mega-menu can look up subprocesses */
+  _solutionId: sol.id,
+  meta: [{ label: "Workflows", value: String(sol.subprocesses.length) }],
+}));
+
+// Platform capabilities column (static)
+const platformCapabilities = [
+  { label: "AI Agents",           href: "/platform/ai-agents",           description: "Task-specific agents that act across your tools and workflows." },
+  { label: "Workflow Automation", href: "/platform/workflow-automation",  description: "Automate multi-step operational processes with AI." },
+  { label: "Plugins",             href: "/solutions",                     description: "50+ ready-to-use capabilities for every business workflow." },
+  { label: "Integrations",        href: "/platform/integrations",         description: "Connect to Salesforce, Zendesk, ServiceNow, Slack and more." },
+  { label: "Voice Intelligence",  href: "/platform/voice-intelligence",   description: "Natural voice interactions for any operational workflow." },
+];
 
 const NAV: NavConfig[] = [
   // ── Solutions ──────────────────────────────────────────────────────────────
@@ -65,132 +86,8 @@ const NAV: NavConfig[] = [
     label: "Solutions",
     href: "/solutions",
     menu: {
-      kind: "mega",
-      withPreview: true,
-      groups: [
-        {
-          heading: "Solutions",
-          headingHref: "/solutions",
-          items: [
-            {
-              label: "HR Solutions",
-              href: "/solutions/hr",
-              description: "Automate the employee lifecycle — from hiring to offboarding.",
-              meta: [{ label: "Workflows", value: "7" }, { label: "Plugins", value: "50+" }],
-            },
-            {
-              label: "Sales",
-              href: "/solutions/sales",
-              description: "Turn prospects into revenue with intelligent sales workflows.",
-              meta: [{ label: "Workflows", value: "4" }, { label: "Plugins", value: "11+" }],
-            },
-            {
-              label: "Customer Support",
-              href: "/solutions/customer-support",
-              description: "Resolve customer issues faster with AI-powered support.",
-              meta: [{ label: "Workflows", value: "4" }, { label: "Plugins", value: "11+" }],
-            },
-            {
-              label: "IT Solutions",
-              href: "/solutions/it",
-              description: "Streamline IT operations, service requests and employee support.",
-              meta: [{ label: "Workflows", value: "3" }, { label: "Plugins", value: "27+" }],
-            },
-          ],
-        },
-        {
-          heading: "Popular Workflows",
-          items: [
-            {
-              label: "Talent Acquisition",
-              href: "/solutions/hr/talent-acquisition",
-              tag: "Live",
-              description: "Find, screen and hire candidates through an AI-powered workflow.",
-              meta: [{ label: "Plugins", value: "10" }, { label: "Integrations", value: "8" }],
-            },
-            {
-              label: "Employee Onboarding",
-              href: "/solutions/employee-onboarding",
-              tag: "Live",
-              description: "Turn new hires into productive employees with automated onboarding.",
-              meta: [{ label: "Plugins", value: "9" }, { label: "Integrations", value: "5" }],
-            },
-            {
-              label: "Lead Management",
-              href: "/solutions/sales/lead-management",
-              tag: "Live",
-              description: "Capture, enrich and qualify leads across the sales pipeline.",
-              meta: [{ label: "Plugins", value: "11" }, { label: "Integrations", value: "3" }],
-            },
-            {
-              label: "Sales Outreach",
-              href: "/solutions/sales-outreach",
-              tag: "Live",
-              description: "Automate personalized outreach and follow-ups across channels.",
-              meta: [{ label: "Plugins", value: "9" }, { label: "Integrations", value: "5" }],
-            },
-            {
-              label: "Ticket Management",
-              href: "/solutions/customer-support/support-workflow",
-              tag: "Live",
-              description: "Create, classify and route support tickets automatically.",
-              meta: [{ label: "Plugins", value: "10" }, { label: "Integrations", value: "3" }],
-            },
-            {
-              label: "IT Support",
-              href: "/solutions/it/it-support",
-              tag: "Live",
-              description: "Resolve employee IT requests from intake to closure with AI guidance.",
-              meta: [{ label: "Plugins", value: "10" }, { label: "Integrations", value: "2" }],
-            },
-            {
-              label: "Service Operations",
-              href: "/solutions/it/service-operations",
-              tag: "Live",
-              description: "Manage IT service requests, approvals and provisioning.",
-              meta: [{ label: "Plugins", value: "8" }, { label: "Integrations", value: "1" }],
-            },
-            {
-              label: "Email Automation",
-              href: "/solutions/it/email-automation",
-              tag: "Live",
-              description: "Classify incoming operational emails and trigger the right workflows.",
-              meta: [{ label: "Plugins", value: "7" }, { label: "Integrations", value: "2" }],
-            },
-          ],
-        },
-        {
-          heading: "Platform Capabilities",
-          items: [
-            {
-              label: "AI Agents",
-              href: "/platform/ai-agents",
-              description: "Task-specific agents that act across your tools and workflows.",
-            },
-            {
-              label: "Workflow Automation",
-              href: "/platform/workflow-automation",
-              description: "Automate multi-step operational processes intelligently.",
-            },
-            {
-              label: "Plugins",
-              href: "/solutions",
-              description: "50+ ready-to-use capabilities for every business workflow.",
-            },
-            {
-              label: "Integrations",
-              href: "/platform/integrations",
-              description: "Connect to Salesforce, Zendesk, ServiceNow, Slack and more.",
-            },
-            {
-              label: "Voice Intelligence",
-              href: "/platform/voice-intelligence",
-              description: "Natural voice interactions for any operational workflow.",
-            },
-          ],
-        },
-      ],
-    },
+      kind: "solutions",   // ← special kind handled by SolutionsMegaMenu
+    } as unknown as MegaMenuConfig,
   },
 
   // ── Services (Platform + Products) ────────────────────────────────────────
@@ -527,6 +424,146 @@ function MegaMenuPanel({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// SOLUTIONS MEGA MENU  (dynamic subprocess panel)
+// Shows: [Solutions column] | [Subprocesses for hovered solution] | [Platform]
+// ─────────────────────────────────────────────────────────────────────────────
+
+function SolutionsMegaMenu({ onClose }: { onClose: () => void }) {
+  // Default to the first solution (HR) so the panel is never empty on open
+  const [activeSolId, setActiveSolId] = useState<string>(SOLUTION_NAV[0].id);
+  const activeSol = SOLUTION_NAV.find((s) => s.id === activeSolId) ?? SOLUTION_NAV[0];
+
+  return (
+    <div
+      className="absolute top-full left-1/2 mt-3 rounded-2xl border border-white/10 bg-[#0a0a0a] shadow-[0_20px_60px_rgba(0,0,0,0.7)] z-50 overflow-hidden"
+      style={{ transform: "translateX(-50%)", width: "min(860px, calc(100vw - 48px))" }}
+      onMouseLeave={onClose}
+    >
+      <div className="grid" style={{ gridTemplateColumns: "200px 1fr 190px" }}>
+
+        {/* ── Column 1: Solution categories ────────────────────────── */}
+        <div className="py-5 px-4 border-r border-white/[0.06]">
+          <Link
+            href="/solutions"
+            onClick={onClose}
+            className="block mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] hover:opacity-75 transition-opacity"
+            style={{ color: BRAND }}
+          >
+            Solutions
+          </Link>
+          <ul className="space-y-0.5">
+            {SOLUTION_NAV.map((sol) => {
+              const isActive = activeSolId === sol.id;
+              return (
+                <li key={sol.id}>
+                  <button
+                    onMouseEnter={() => setActiveSolId(sol.id)}
+                    onClick={() => { onClose(); window.location.href = sol.href; }}
+                    className={`w-full text-left flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-[13px] transition-all duration-100 ${
+                      isActive
+                        ? "bg-white/[0.08] text-white"
+                        : "text-slate-400 hover:bg-white/[0.04] hover:text-white"
+                    }`}
+                  >
+                    <span className="leading-snug">{sol.label}</span>
+                    <svg
+                      className={`w-3 h-3 flex-shrink-0 transition-all duration-100 ${isActive ? "opacity-60" : "opacity-0"}`}
+                      fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* ── Column 2: Subprocesses for hovered solution ──────────── */}
+        <div className="py-5 px-5 border-r border-white/[0.06]">
+          <Link
+            href={activeSol.href}
+            onClick={onClose}
+            className="block mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] hover:opacity-75 transition-opacity"
+            style={{ color: "rgba(255,255,255,0.28)" }}
+          >
+            {activeSol.label} workflows
+          </Link>
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+            {activeSol.subprocesses.map((sub) => (
+              <li key={sub.id}>
+                <Link
+                  href={sub.href}
+                  onClick={onClose}
+                  className="group flex items-center gap-1.5 rounded-lg px-3 py-2 text-[13px] text-slate-400 hover:bg-white/[0.05] hover:text-white transition-all duration-100"
+                >
+                  <span className="w-1 h-1 rounded-full bg-white/20 group-hover:bg-[#0066FF] flex-shrink-0 transition-colors" />
+                  <span className="leading-snug truncate">{sub.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4 pt-3 border-t border-white/[0.06]">
+            <Link
+              href={activeSol.href}
+              onClick={onClose}
+              className="inline-flex items-center gap-1.5 text-[11px] font-semibold transition-colors hover:opacity-80"
+              style={{ color: BRAND }}
+            >
+              All {activeSol.label} workflows
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+
+        {/* ── Column 3: Platform capabilities (static) ─────────────── */}
+        <div className="py-5 px-4">
+          <p
+            className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em]"
+            style={{ color: "rgba(255,255,255,0.28)" }}
+          >
+            Platform
+          </p>
+          <ul className="space-y-0.5">
+            {platformCapabilities.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={onClose}
+                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-[12px] text-slate-400 hover:bg-white/[0.04] hover:text-white transition-all duration-100"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div
+        className="flex items-center justify-between px-5 py-3 border-t"
+        style={{ borderColor: "rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}
+      >
+        <p className="text-[11px]" style={{ color: "rgba(255,255,255,0.28)" }}>
+          AI agents · Workflows · Plugins · Integrations
+        </p>
+        <Link
+          href="/solutions"
+          onClick={onClose}
+          className="text-[11px] font-semibold transition-colors hover:opacity-75"
+          style={{ color: BRAND }}
+        >
+          See all solutions →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // DESKTOP NAV BUTTON + PANEL
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -583,7 +620,9 @@ function NavButton({
 
       {/* Panel */}
       {active && config.menu && (
-        config.menu.kind === "mega" ? (
+        (config.menu as { kind: string }).kind === "solutions" ? (
+          <SolutionsMegaMenu onClose={onClose} />
+        ) : config.menu.kind === "mega" ? (
           <MegaMenuPanel config={config.menu} onClose={onClose} />
         ) : (
           <SimpleDropdown items={config.menu.items} />
@@ -690,7 +729,31 @@ function MobileMenu({ open, onClose, dark, onToggleTheme }: { open: boolean; onC
                   )}
 
                   {/* Grouped items */}
-                  {nav.menu?.kind === "mega"
+                  {(nav.menu as { kind: string })?.kind === "solutions"
+                    ? SOLUTION_NAV.map((sol) => (
+                        <div key={sol.id}>
+                          <Link
+                            href={sol.href}
+                            onClick={onClose}
+                            className="flex items-center px-4 pt-3 pb-1 text-[10px] font-semibold uppercase tracking-[0.18em] hover:opacity-80 transition-opacity"
+                            style={{ color: BRAND }}
+                          >
+                            {sol.label} →
+                          </Link>
+                          {sol.subprocesses.map((sub) => (
+                            <Link
+                              key={sub.id}
+                              href={sub.href}
+                              onClick={onClose}
+                              className="flex items-center gap-2 px-6 py-2 text-[13px] text-slate-400 hover:text-white hover:bg-white/5 transition-colors"
+                            >
+                              <span className="w-1 h-1 rounded-full bg-white/20 flex-shrink-0" />
+                              {sub.label}
+                            </Link>
+                          ))}
+                        </div>
+                      ))
+                    : nav.menu?.kind === "mega"
                     ? nav.menu.groups.map((group) => (
                         <div key={group.heading}>
                           <p

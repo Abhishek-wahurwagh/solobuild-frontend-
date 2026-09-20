@@ -32,6 +32,17 @@ export type SolutionCategory =
 
 // ── Logo type — every plugin has a unique identifier that drives rendering ─────
 export type SolutionLogoType =
+  // ── HR Talent Acquisition (native capabilities) ─────────────────────────
+  | "jd-analyzer"
+  | "candidate-sourcing"
+  | "resume-parser"
+  | "resume-screening"
+  | "candidate-scoring"
+  | "voice-screening"
+  | "call-assessment"
+  | "interview-scheduling"
+  | "candidate-communication"
+  | "screening-report"
   // ── Sales ──────────────────────────────────────────────────────────────
   | "lead-capture"
   | "lead-enrichment"
