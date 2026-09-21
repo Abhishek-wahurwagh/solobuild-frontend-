@@ -132,8 +132,11 @@ export default function AIAssistantShowcase() {
             <a href="#ai-assistant-chat" className="inline-flex items-center gap-2.5 rounded-xl border border-white/15 px-5 py-3 text-[13px] font-semibold text-white transition-all hover:border-white/30 hover:bg-white/5">See it in action <span aria-hidden="true">→</span></a>
           </div>
         </div>
-        <div id="ai-assistant-chat" className="min-w-0 border-t border-white/12 p-3 sm:p-5 lg:border-l lg:border-t-0 lg:p-6 scroll-mt-20">
-          <ChatbotShell compact />
+        <div id="ai-assistant-chat" className="min-w-0 border-t border-white/12 bg-[#080808] p-4 sm:p-6 lg:border-l lg:border-t-0 scroll-mt-20 flex items-center justify-center">
+          {/* White chatbot card — floats inside the dark column */}
+          <div className="w-full max-w-[900px]">
+            <ChatbotShell compact light />
+          </div>
         </div>
       </div>
     </section>
