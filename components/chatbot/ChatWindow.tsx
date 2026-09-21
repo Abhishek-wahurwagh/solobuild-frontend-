@@ -26,7 +26,7 @@ export default function ChatWindow({
   const footBg = light ? "bg-white"               : "";
 
   return (
-    <main className={`flex min-h-[480px] min-w-0 flex-1 flex-col ${bg}`}>
+    <main className={`flex min-h-0 min-w-0 flex-1 flex-col ${bg}`}>
       {/* Message list */}
       <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="mx-auto max-w-2xl space-y-6">

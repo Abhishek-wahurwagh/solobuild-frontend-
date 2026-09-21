@@ -11,9 +11,11 @@ import { ChatMessage, SolutionId } from "./types";
 export default function ChatbotShell({
   compact = false,
   light = false,
+  fullHeight = false,
 }: {
   compact?: boolean;
   light?: boolean;
+  fullHeight?: boolean;
 }) {
   const [selectedSolution, setSelectedSolution] = useState<SolutionId>("hr");
   const [selectedChat, setSelectedChat] = useState<string | null>("hr-tasks");
@@ -82,6 +84,8 @@ export default function ChatbotShell({
       className={`relative flex min-h-0 overflow-hidden border ${shellBorder} ${shellBg} text-white ${
         compact
           ? "h-[600px] rounded-2xl shadow-[0_4px_32px_rgba(0,0,0,0.22),0_0_0_1px_rgba(0,0,0,0.04)]"
+          : fullHeight
+          ? "h-full"
           : "min-h-[calc(100vh-58px)]"
       }`}
     >
